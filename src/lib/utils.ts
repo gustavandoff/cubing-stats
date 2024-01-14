@@ -1,19 +1,14 @@
-export const convertMilliseconds = (s: number): string => {
-	let ms = s % 1000;
-	s = (s - ms) / 1000;
-	let secs = s % 60;
-	s = (s - secs) / 60;
-	let mins = s % 60;
+export const convertMilliseconds = (milliseconds: number): string => {
+	const totalSeconds = Math.floor(milliseconds / 1000);
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    const hundredths = Math.floor((milliseconds % 1000) / 10);
 
-	let msString = ('' + ms).substring(0, 2);
-	let secsString: string = secs < 10 ? '0' + secs + '.' : secs + '.';
-	let minsString: string = '';
-
-	if (mins) {
-		minsString = mins < 10 ? '0' + mins + ':' : mins + ':';
-	}
-
-	return minsString + secsString + '.' + msString;
+    if (minutes > 0) {
+        return `${minutes}:${seconds.toString().padStart(2, '0')}.${hundredths.toString().padStart(2, '0')}`;
+    } else {
+        return `${seconds}.${hundredths.toString().padStart(2, '0')}`;
+    }
 };
 
 export const convertDate = (s: number): string => {
