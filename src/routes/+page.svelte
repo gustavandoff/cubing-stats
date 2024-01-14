@@ -3,7 +3,7 @@
 	import ao12Icon from '$lib/images/ao12icon.png';
 	import ao100Icon from '$lib/images/ao100icon.png';
 
-	import BaseCard from './BaseCard.svelte';
+	import BaseCard from '$lib/components/BaseCard.svelte';
 </script>
 
 <div class="stat-list">
