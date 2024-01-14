@@ -4,7 +4,14 @@
 	import ao100Icon from '$lib/images/ao100icon.png';
 
 	import BaseCard from '$lib/components/BaseCard.svelte';
+	import LoadTimes from '$lib/components/LoadTimes.svelte';
+	
+	import { rawCSTimerData } from '$lib/solves';
 </script>
+
+{#if !$rawCSTimerData}
+	<LoadTimes />
+{/if}
 
 <div class="stat-list">
 	<BaseCard

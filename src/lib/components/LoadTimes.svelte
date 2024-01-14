@@ -24,28 +24,41 @@
 	}
 </script>
 
-<div class="container">
-    <div class="button">
-        <label for="file-upload"> Upload csTimer-file </label>
-        <input id="file-upload" name="file-upload" bind:files type="file" />
-    </div>
+<div class="modal-background">
+	<div class="container">
+		<div class="button">
+			<label for="file-upload"> Upload csTimer-file </label>
+			<input id="file-upload" name="file-upload" bind:files type="file" />
+		</div>
 
-    {#if errorMessage}
-        <p class="error">
-            {errorMessage}
-        </p>
-    {/if}
+		{#if errorMessage}
+			<p class="error">
+				{errorMessage}
+			</p>
+		{/if}
+	</div>
 </div>
 
-
 <style>
-    .container {
+    .modal-background {
+        background-color: rgba(0, 0, 0, 0.6);
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+
         display: flex;
-        flex-direction: column;
         align-items: center;
         justify-content: center;
-        height: 80vh;
     }
+
+	.container {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+	}
 
 	.button {
 		display: inline-block;
@@ -59,18 +72,17 @@
 		cursor: pointer;
 	}
 
-    label {
-        cursor: pointer;
-        display: inline-block;
+	label {
+		cursor: pointer;
+		display: inline-block;
 		padding: 40px;
-    }
+	}
 
 	input[type='file'] {
 		display: none;
 	}
 
-    .error {
-        color: red;
-    }
-
+	.error {
+		color: red;
+	}
 </style>
