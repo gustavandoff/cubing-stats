@@ -5,17 +5,13 @@ export const rawCSTimerData = writable<any>(null);
 const csSessionData = writable<csSessionData[]>([]);
 
 export const setRawCSTimerData = (data: any) => {
-	console.log('setRawCSTimerData');
 	rawCSTimerData.set(data);
-	console.log('rawCSTimerData: ', data);
 
-	csSessionData.set(
-		[null, ...Object.values(JSON.parse(data.properties.sessionData)).map((session: any) => session.name)]
-	);
-	console.log(
-		'csSessionData: ',
-		[null, ...Object.values(JSON.parse(data.properties.sessionData)).map((session: any) => session.name)]
-	);
+	const tempSessionData = [null, ...Object.values(JSON.parse(data.properties.sessionData)).map((session: any) => session.name)];
+	csSessionData.set(tempSessionData);
+	
+	localStorage.setItem('rawCSTimerData', JSON.stringify(data));
+	localStorage.setItem('csSessionData', JSON.stringify(tempSessionData));
 };
 
 export const formatedCSTimerData: Readable<Session[]> = derived(
@@ -23,7 +19,6 @@ export const formatedCSTimerData: Readable<Session[]> = derived(
 	([$csSessionData, $rawCSTimerData], set) => {
 		let formatedData: Session[] = [];
 
-		console.log('$csSessionData: ', $csSessionData);
 		for (let i = 1; i < $csSessionData.length; i++) {
 			const sessionName = $csSessionData[i];
 			const session = $rawCSTimerData['session' + i];

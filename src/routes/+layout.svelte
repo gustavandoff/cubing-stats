@@ -1,19 +1,27 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
+
 	import ao5Icon from '$lib/images/ao5icon.png';
 	import ao12Icon from '$lib/images/ao12icon.png';
 	import ao100Icon from '$lib/images/ao100icon.png';
 
 	import BaseCard from '$lib/components/BaseCard.svelte';
 	import LoadTimes from '$lib/components/LoadTimes.svelte';
-	
-	import { rawCSTimerData } from '$lib/solves';
+
+	import { rawCSTimerData, setRawCSTimerData } from '$lib/solves';
+
+	$: if (browser && localStorage.getItem('rawCSTimerData') && !$rawCSTimerData) {
+		setRawCSTimerData(JSON.parse(localStorage.getItem('rawCSTimerData') as string));
+	}
+
+	$: showLoadTimes = browser && !localStorage.getItem('rawCSTimerData');
 </script>
 
-{#if !$rawCSTimerData}
+{#if showLoadTimes}
 	<LoadTimes />
 {/if}
 
-<div class="stat-list">
+<div class="stat-list" class:inactive={showLoadTimes}>
 	<BaseCard
 		route="/ao5"
 		imgSrc={ao5Icon}
@@ -45,5 +53,9 @@
 		align-items: center;
 		justify-content: center;
 		gap: 10px;
+	}
+
+	.stat-list.inactive {
+		pointer-events: none;
 	}
 </style>
