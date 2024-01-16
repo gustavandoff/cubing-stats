@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import ao5Icon from '$lib/images/ao5icon.png';
 	import ao12Icon from '$lib/images/ao12icon.png';
 	import ao100Icon from '$lib/images/ao100icon.png';
@@ -36,6 +36,8 @@
 		text="Shows a graph of all the averages of 100"
 	/>
 </div>
+
+<slot />
 
 <style>
 	.stat-list {
