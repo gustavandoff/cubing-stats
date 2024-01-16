@@ -8,9 +8,6 @@
 </script>
 
 <div class="container">
-	<h1>
-		{data.statTitle}
-	</h1>
     {#if $rawCSTimerData}
         <Chart dataType={data.statTitle} />
     {/if}
