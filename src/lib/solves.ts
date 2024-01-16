@@ -1,5 +1,5 @@
 import { writable, derived, get, type Readable } from 'svelte/store';
-import { convertMilliseconds, convertDate, calcAo5 } from './utils';
+import { convertMilliseconds, convertDate } from './utils';
 
 export const rawCSTimerData = writable<any>(null);
 const csSessionData = writable<csSessionData[]>([]);
@@ -74,30 +74,4 @@ export const allSinglePBs: Readable<Session[]> = derived(formatedCSTimerData, ($
 	});
 
 	set(allPBs);
-});
-
-export const allAo5: Readable<Session[]> = derived(formatedCSTimerData, ($formatedCSTimerData, set) => {
-	let tempAllAo5: Session[] = [];
-	$formatedCSTimerData.forEach((session) => {
-		let ao5sInThisSession: any[] = [];
-		let currentAo5: any = null;
-
-		for (let i = 0; i < session.solves.length - 5; i++) {
-			currentAo5 = calcAo5([
-				session.solves[i],
-				session.solves[i + 1],
-				session.solves[i + 2],
-				session.solves[i + 3],
-				session.solves[i + 4]
-			]);
-			ao5sInThisSession.push(currentAo5);
-		}
-
-		tempAllAo5.push({
-			sessionName: session.sessionName,
-			solves: ao5sInThisSession
-		});
-	});
-
-	return set(tempAllAo5);
 });
