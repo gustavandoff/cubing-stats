@@ -3,6 +3,8 @@
 
 	import ao5Icon from '$lib/images/ao5icon.png';
 	import ao12Icon from '$lib/images/ao12icon.png';
+	import ao25Icon from '$lib/images/ao25icon.png';
+	import ao50Icon from '$lib/images/ao50icon.png';
 	import ao100Icon from '$lib/images/ao100icon.png';
 
 	import BaseCard from '$lib/components/BaseCard.svelte';
@@ -35,6 +37,20 @@
 		imgAlt="Ao12"
 		title="Ao12 over time"
 		text="Shows a graph of all the averages of 12"
+	/>
+	<BaseCard
+		route="/ao25"
+		imgSrc={ao25Icon}
+		imgAlt="Ao25"
+		title="Ao25 over time"
+		text="Shows a graph of all the averages of 25"
+	/>
+	<BaseCard
+		route="/ao50"
+		imgSrc={ao50Icon}
+		imgAlt="Ao50"
+		title="Ao50 over time"
+		text="Shows a graph of all the averages of 50"
 	/>
 	<BaseCard
 		route="/ao100"
