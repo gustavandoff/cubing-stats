@@ -37,7 +37,7 @@
 		},
 		series: [
 			{
-				data: data.map((data) => data.timeInMillis),
+				data: data.map((data) => data.time),
 				type: 'line',
 				smooth: true
 			}
