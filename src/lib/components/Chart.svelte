@@ -6,7 +6,7 @@
 	import { allSinglePBs, formatedCSTimerData } from '$lib/solves';
 	import { getAllAoX } from '$lib/utils';
 
-	export let dataType: string;
+	export let statTypes: string;
 
 	let data: Solve[] = [];
 	let options: EChartsOptions = {};

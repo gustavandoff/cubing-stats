@@ -9,7 +9,7 @@
 
 <div class="container">
     {#if $rawCSTimerData}
-        <Chart dataType={data.statTitle} />
+        <Chart statTypes={data.statTitle} />
     {/if}
     
 </div>
