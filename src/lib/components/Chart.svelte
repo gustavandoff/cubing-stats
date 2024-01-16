@@ -1,23 +1,35 @@
 <script lang="ts">
 	import { Chart, type EChartsOptions } from 'svelte-echarts';
+	import { goto } from '$app/navigation';
 
-    import { allSinglePBs, formatedCSTimerData, allAo5 } from '$lib/solves';
+	import { allSinglePBs, formatedCSTimerData } from '$lib/solves';
+	import { getAllAoX } from '$lib/utils';
 
-    $: console.log('allSinglePBs: ', $allSinglePBs);
-    $: console.log('formatedCSTimerData: ', $formatedCSTimerData);
-    $: console.log('allAo5: ', $allAo5);
+	export let dataType: string;
 
-    let data: Solve[] = [];
-    let options: EChartsOptions = {};
+	let data: Solve[] = [];
+	let options: EChartsOptions = {};
+	
+	const incorrectAvgCount = (avgCount: number) => {
+		return !([5, 12, 25, 50].includes(avgCount) || avgCount % 100 === 0);
+	};
 
-    $: {
-        data = $allAo5[0].solves;
-        console.log('data: ', data);
-    }
+	$: {
+		if (dataType.startsWith('ao')) {
+			const avgCount = +dataType.slice(2);
+			if (incorrectAvgCount(avgCount)) {
+				goto('/');
+			} else {
+				data = getAllAoX(avgCount, $formatedCSTimerData[0].solves);
+			}
+		} else {
+			data = [];
+		}
+	}
 
 	$: options = {
 		xAxis: {
-			data: data.map(data => data.date),
+			data: data.map((data) => data.date),
 			type: 'category'
 		},
 		yAxis: {
@@ -25,7 +37,7 @@
 		},
 		series: [
 			{
-				data: data.map(data => data.timeInMillis),
+				data: data.map((data) => data.timeInMillis),
 				type: 'line',
 				smooth: true
 			}

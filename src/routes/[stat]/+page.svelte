@@ -12,7 +12,7 @@
 		{data.statTitle}
 	</h1>
     {#if $rawCSTimerData}
-        <Chart />
+        <Chart dataType={data.statTitle} />
     {/if}
     
 </div>
