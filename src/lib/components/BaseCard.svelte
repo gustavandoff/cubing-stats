@@ -22,6 +22,7 @@
 		background-color: #555555;
 		border-radius: 4px;
 		padding: 5px;
+		text-decoration: none;
 	}
 
 	.card-body {
