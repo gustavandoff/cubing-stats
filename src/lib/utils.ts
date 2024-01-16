@@ -16,7 +16,7 @@ export const convertDate = (s: number): string => {
     return date.toLocaleDateString();
 };
 
-export const calcAo5 = (solves: Solve[]): Average => {
+export const calcAo5 = (solves: Solve[]): Solve => {
 	const unsortedSolves = [...solves];
 	solves.sort((a, b) => a.timeInMillis - b.timeInMillis);
 	const avgTimeInMillis =
@@ -24,19 +24,17 @@ export const calcAo5 = (solves: Solve[]): Average => {
 	return {
 		time: convertMilliseconds(avgTimeInMillis),
 		timeInMillis: avgTimeInMillis,
-		dateOfLast: solves[4].date,
-		solves: unsortedSolves
+		date: solves[4].date
 	};
 };
 
-export const calcMean = (solves: Solve[]): Average => {
+export const calcMean = (solves: Solve[]): Solve => {
 	const unsortedSolves = [...solves];
 	solves.sort((a, b) => b.timeInMillis - a.timeInMillis);
 	const avgTimeInMillis = solves.reduce((acc, curr) => acc + curr.timeInMillis, 0) / solves.length;
 	return {
 		time: convertMilliseconds(avgTimeInMillis),
 		timeInMillis: avgTimeInMillis,
-		dateOfLast: solves[0].date,
-		solves: unsortedSolves
+		date: solves[0].date
 	};
 }

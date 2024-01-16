@@ -13,20 +13,13 @@ declare global {
 interface Solve {
 	time: string;
 	timeInMillis: number;
-	scramble: string;
-	comment: string;
+	scramble?: string;
+	comment?: string;
 	date: string;
 }
 
 interface Session {
 	sessionName: string;
-	solves: Solve[];
-}
-
-interface Average {
-	time: string;
-	timeInMillis: number;
-	dateOfLast: string;
 	solves: Solve[];
 }
 
