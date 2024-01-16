@@ -18,7 +18,7 @@ export const setRawCSTimerData = (data: any) => {
 	);
 };
 
-const formatedCSTimerData: Readable<Session[]> = derived(
+export const formatedCSTimerData: Readable<Session[]> = derived(
 	[csSessionData, rawCSTimerData],
 	([$csSessionData, $rawCSTimerData], set) => {
 		let formatedData: Session[] = [];
@@ -76,7 +76,7 @@ export const allSinglePBs: Readable<Session[]> = derived(formatedCSTimerData, ($
 	set(allPBs);
 });
 
-const allAo5 = derived(formatedCSTimerData, ($formatedCSTimerData, set) => {
+export const allAo5: Readable<Session[]> = derived(formatedCSTimerData, ($formatedCSTimerData, set) => {
 	let tempAllAo5: Session[] = [];
 	$formatedCSTimerData.forEach((session) => {
 		let ao5sInThisSession: any[] = [];
