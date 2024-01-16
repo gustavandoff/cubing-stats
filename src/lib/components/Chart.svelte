@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { Chart, type EChartsOptions } from 'svelte-echarts';
+	import type { SeriesOption } from 'echarts';
 	import { goto } from '$app/navigation';
 
 	import { allSinglePBs, formatedCSTimerData } from '$lib/solves';
@@ -9,7 +10,7 @@
 
 	let data: Solve[] = [];
 	let options: EChartsOptions = {};
-	
+
 	const incorrectAvgCount = (avgCount: number) => {
 		return !([5, 12, 25, 50].includes(avgCount) || avgCount % 100 === 0);
 	};
@@ -27,6 +28,16 @@
 		}
 	}
 
+	let series: SeriesOption[];
+	$: series = [
+		{
+			name: dataType,
+			data: data.map((data) => data.time),
+			type: 'line',
+			smooth: true
+		}
+	];
+
 	$: options = {
 		xAxis: {
 			data: data.map((data) => data.date),
@@ -35,13 +46,7 @@
 		yAxis: {
 			type: 'value'
 		},
-		series: [
-			{
-				data: data.map((data) => data.time),
-				type: 'line',
-				smooth: true
-			}
-		]
+		series
 	};
 </script>
 
