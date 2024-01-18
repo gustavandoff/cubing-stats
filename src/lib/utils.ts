@@ -7,7 +7,7 @@ export const convertDate = (s: number): string => {
 	return `${year}-${month}-${day}`;
 };
 
-export const convertMilliseconds = (milliseconds: number): string => {
+export const convertHundredths = (milliseconds: number): string => {
 	milliseconds *= 10;
 	const totalSeconds = Math.floor(milliseconds / 1000);
 	const minutes = Math.floor(totalSeconds / 60);
@@ -43,9 +43,9 @@ const calcAvg = (
 
 	const addedSolve = solves[solves.length - 1];
 	if (lastBest && lastWorst && removedSolve && lastAverage) {
-		const addedTime = addedSolve.timeInMillis;
-		const lastRemovedTime = removedSolve.timeInMillis;
-		const lastAverageTime = lastAverage.timeInMillis;
+		const addedTime = addedSolve.timeInHundredths;
+		const lastRemovedTime = removedSolve.timeInHundredths;
+		const lastAverageTime = lastAverage.timeInHundredths;
 
 		if (lastRemovedTime === addedTime) {
 			return {
@@ -58,8 +58,8 @@ const calcAvg = (
 			};
 		}
 
-		const lastBestTime = lastBest[0].timeInMillis;
-		const lastWorstTime = lastWorst[lastWorst.length - 1].timeInMillis;
+		const lastBestTime = lastBest[0].timeInHundredths;
+		const lastWorstTime = lastWorst[lastWorst.length - 1].timeInHundredths;
 		if (lastRemovedTime < lastBestTime) {
 			if (addedTime < lastBestTime) {
 				return {
@@ -92,8 +92,8 @@ const calcAvg = (
 					best: lastBest,
 					worst: lastWorst,
 					average: {
-						time: convertMilliseconds(newAverage),
-						timeInMillis: newAverage,
+						time: convertHundredths(newAverage),
+						timeInHundredths: newAverage,
 						date: addedSolve.date
 					}
 				};
@@ -101,7 +101,7 @@ const calcAvg = (
 		}
 	}
 
-	solves.sort((a, b) => b.timeInMillis - a.timeInMillis);
+	solves.sort((a, b) => b.timeInHundredths - a.timeInHundredths);
 
 	const worstSolves = solves.splice(0, removedCount);
 	const bestSolves = solves.splice(solves.length - removedCount, removedCount);
@@ -117,10 +117,10 @@ const calcAvg = (
 };
 
 const calcMean = (solves: Solve[]): Solve => {
-	const avgTimeInMillis = solves.reduce((acc, curr) => acc + curr.timeInMillis, 0) / solves.length;
+	const avgTimeInHundredths = solves.reduce((acc, curr) => acc + curr.timeInHundredths, 0) / solves.length;
 	return {
-		time: convertMilliseconds(avgTimeInMillis),
-		timeInMillis: avgTimeInMillis,
+		time: convertHundredths(avgTimeInHundredths),
+		timeInHundredths: avgTimeInHundredths,
 		date: solves[0].date
 	};
 };
@@ -152,7 +152,7 @@ export const getAllAoX = (x: number, solves: Solve[]): Solve[] => {
 
 	let lastBest: Solve[] = [];
 	let lastWorst: Solve[] = [];
-	let lastAverage: Solve = { time: '0.00', timeInMillis: 0, date: '' };
+	let lastAverage: Solve = { time: '0.00', timeInHundredths: 0, date: '' };
 
 	for (let i = 0; i <= limit; i++) {
 		const { best, worst, average } = calcAvg(
@@ -169,10 +169,10 @@ export const getAllAoX = (x: number, solves: Solve[]): Solve[] => {
 
 		const roundedAverage = {
 			...average,
-			time: convertMilliseconds(Math.round(average.timeInMillis)),
-			timeInMillis: Math.round(average.timeInMillis)
+			time: convertHundredths(Math.round(average.timeInHundredths)),
+			timeInHundredths: Math.round(average.timeInHundredths)
 		};
-		
+
 		aoXs.push(roundedAverage);
 	}
 

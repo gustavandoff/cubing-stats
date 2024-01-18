@@ -12,7 +12,7 @@ declare global {
 
 interface Solve {
 	time: string;
-	timeInMillis: number;
+	timeInHundredths: number;
 	scramble?: string;
 	comment?: string;
 	date: string;

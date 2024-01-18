@@ -1,5 +1,5 @@
 import { writable, derived, get, type Readable } from 'svelte/store';
-import { convertMilliseconds, convertDate } from './utils';
+import { convertHundredths, convertDate } from './utils';
 
 export const rawCSTimerData = writable<any>(null);
 const csSessionData = writable<csSessionData[]>([]);
@@ -27,8 +27,8 @@ export const formatedCSTimerData: Readable<Session[]> = derived(
 
 			session.forEach((solve: SessionSolve) => {
 				formatedSession.push({
-					time: convertMilliseconds(solve[0][1]),
-					timeInMillis: solve[0][1],
+					time: convertHundredths(solve[0][1]),
+					timeInHundredths: Math.floor(solve[0][1] / 10),
 					scramble: solve[1],
 					comment: solve[2],
 					date: convertDate(solve[3])
@@ -56,7 +56,7 @@ export const allSinglePBs: Readable<Session[]> = derived(formatedCSTimerData, ($
 		let currentPB: Solve | null = null;
 
 		session.solves.forEach((solve) => {
-			if (!currentPB || solve.timeInMillis < currentPB.timeInMillis) {
+			if (!currentPB || solve.timeInHundredths < currentPB.timeInHundredths) {
 				pbsInThisSession.push(solve);
 				currentPB = solve;
 			}
