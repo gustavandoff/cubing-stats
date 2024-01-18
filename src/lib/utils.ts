@@ -166,7 +166,14 @@ export const getAllAoX = (x: number, solves: Solve[]): Solve[] => {
 		lastBest = best;
 		lastWorst = worst;
 		lastAverage = average;
-		aoXs.push(average);
+
+		const roundedAverage = {
+			...average,
+			time: convertMilliseconds(Math.round(average.timeInMillis)),
+			timeInMillis: Math.round(average.timeInMillis)
+		};
+		
+		aoXs.push(roundedAverage);
 	}
 
 	const time = new Date().getTime() - startTime;
