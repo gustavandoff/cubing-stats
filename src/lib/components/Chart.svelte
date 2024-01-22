@@ -3,44 +3,91 @@
 	import type { SeriesOption } from 'echarts';
 	import { goto } from '$app/navigation';
 
-	import { allSinglePBs, formatedCSTimerData } from '$lib/solves';
+	import { formatedCSTimerData } from '$lib/solves';
 	import { getAllAoX } from '$lib/utils';
 
 	export let statTypes: string;
 
-	let data: Solve[] = [];
 	let options: EChartsOptions = {};
 
-	const incorrectAvgCount = (avgCount: number) => {
-		return !([5, 12, 25, 50].includes(avgCount) || avgCount % 100 === 0);
-	};
+	const incorrectAvgCount = (avgCount: number) =>
+		!([5, 12, 25, 50].includes(avgCount) || avgCount % 100 === 0);
 
-	$: {
-		if (dataType.startsWith('ao')) {
-			const avgCount = +dataType.slice(2);
-			if (incorrectAvgCount(avgCount)) {
-				goto('/');
-			} else {
-				data = getAllAoX(avgCount, $formatedCSTimerData[0].solves);
-			}
-		} else {
-			data = [];
-		}
+	interface TempSeries {
+		times: string[];
+		dates: string[];
+		type: 'line';
 	}
 
 	let series: SeriesOption[];
-	$: series = [
-		{
-			name: dataType,
-			data: data.map((data) => data.time),
-			type: 'line',
-			smooth: true
-		}
-	];
+	let dates: string[];
+
+	$: {
+		console.log('Starting loading times');
+		const startTime = new Date().getTime();
+		const splitStatTypes = statTypes.split(';');
+
+		let tempSeries: TempSeries[] = [];
+		let tempDates: string[] = [];
+
+		splitStatTypes.forEach((stat) => {
+			if (stat.startsWith('ao')) {
+				const avgCount = +stat.slice(2);
+				if (incorrectAvgCount(avgCount)) {
+					goto('/');
+				} else {
+					const currentSolves = getAllAoX(avgCount, $formatedCSTimerData[0].solves);
+
+					const newTimes = currentSolves.map((solve) => solve.time);
+					const curruntDates = currentSolves.map((solve) => solve.date);
+
+					let i = 0;
+
+					while (curruntDates[i] || tempDates[i]) {
+						if (curruntDates[i] < tempDates[i] || !tempDates[i]) {
+							tempDates.splice(i, 0, curruntDates[i]);
+						}
+						i++;
+					}
+
+					tempSeries.push({
+						times: newTimes,
+						dates: curruntDates,
+						type: 'line'
+					});
+				}
+			}
+		});
+
+		tempSeries.sort((a, b) => b.times.length - a.times.length);
+
+		series = tempSeries.map((s) => {
+			let iModifier = 0;
+			const times = tempDates.map((date, i) => {
+				i = i + iModifier;
+
+				if (s.dates[i] > date) {
+					iModifier--;
+					return s.times[i - 1];
+				}
+				return s.times[i];
+			});
+
+			return {
+				data: times,
+				type: 'line'
+			};
+		});
+
+		dates = tempDates;
+
+		const time = new Date().getTime() - startTime;
+		console.log(`Done in ${time}ms`);
+	}
 
 	$: options = {
 		xAxis: {
-			data: data.map((data) => data.date),
+			data: dates,
 			type: 'category'
 		},
 		yAxis: {
