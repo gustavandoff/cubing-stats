@@ -17,6 +17,7 @@
 	}
 
 	$: showLoadTimes = browser && !localStorage.getItem('rawCSTimerData');
+	$: currentUrl = browser ? window.location.origin : '';
 </script>
 
 {#if showLoadTimes}
@@ -25,35 +26,35 @@
 
 <div class="stat-list" class:inactive={showLoadTimes}>
 	<BaseCard
-		route="/ao5"
+		route={currentUrl + '/graph/ao5'}
 		imgSrc={ao5Icon}
 		imgAlt="Ao5"
 		title="Ao5 over time"
 		text="Shows a graph of all the averages of 5"
 	/>
 	<BaseCard
-		route="/ao12"
+		route={currentUrl + '/graph/ao12'}
 		imgSrc={ao12Icon}
 		imgAlt="Ao12"
 		title="Ao12 over time"
 		text="Shows a graph of all the averages of 12"
 	/>
 	<BaseCard
-		route="/ao25"
+		route={currentUrl + '/graph/ao25'}
 		imgSrc={ao25Icon}
 		imgAlt="Ao25"
 		title="Ao25 over time"
 		text="Shows a graph of all the averages of 25"
 	/>
 	<BaseCard
-		route="/ao50"
+		route={currentUrl + '/graph/ao50'}
 		imgSrc={ao50Icon}
 		imgAlt="Ao50"
 		title="Ao50 over time"
 		text="Shows a graph of all the averages of 50"
 	/>
 	<BaseCard
-		route="/ao100"
+		route={currentUrl + '/graph/ao100'}
 		imgSrc={ao100Icon}
 		imgAlt="Ao100"
 		title="Ao100 over time"
