@@ -38,15 +38,14 @@
 	}
 
 	.card-title {
-		margin: 10px 0 0 0;
+		margin: 5px 0 0 0;
 		font-weight: 1000;
-		line-height: 1.2;
 		font-size: 2rem;
 		color: #ffffff;
 	}
 
 	.card-text {
-		margin: 10px 0 0 0;
+		margin: 5px 0 5px 0;
 		font-weight: 400;
 		line-height: 1.5;
 		font-size: 1rem;
@@ -55,7 +54,7 @@
 
 	.card-svg-top {
 		text-align: center;
-		font-size: 50px;
+		font-size: 60px;
 		color: #fff;
 	}
 </style>
