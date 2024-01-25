@@ -39,20 +39,20 @@
 					const currentSolves = getAllAoX(avgCount, $formattedCSTimerData[0].solves);
 
 					const newTimes = currentSolves.map((solve) => solve.time);
-					const curruntDates = currentSolves.map((solve) => solve.date);
+					const currentDates = currentSolves.map((solve) => solve.date);
 
 					let i = 0;
 
-					while (curruntDates[i] || tempDates[i]) {
-						if (curruntDates[i] < tempDates[i] || !tempDates[i]) {
-							tempDates.splice(i, 0, curruntDates[i]);
+					while (currentDates[i] || tempDates[i]) {
+						if (currentDates[i] < tempDates[i] || !tempDates[i]) {
+							tempDates.splice(i, 0, currentDates[i]);
 						}
 						i++;
 					}
 
 					tempSeries.push({
 						times: newTimes,
-						dates: curruntDates,
+						dates: currentDates,
 						type: 'line'
 					});
 				}
