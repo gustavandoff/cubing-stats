@@ -11,7 +11,7 @@
 		setRawCSTimerData(JSON.parse(localStorage.getItem('rawCSTimerData') as string));
 	}
 
-	$: showLoadTimes = browser && !localStorage.getItem('rawCSTimerData');
+	$: showLoadTimes = browser && !localStorage.getItem('rawCSTimerData') && !$rawCSTimerData;
 </script>
 
 {#if showLoadTimes}
