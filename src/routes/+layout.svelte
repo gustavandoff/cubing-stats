@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
+	
+	import '@fortawesome/fontawesome-free/css/all.min.css'
 
 	import ao5Icon from '$lib/images/ao5icon.png';
 	import ao12Icon from '$lib/images/ao12icon.png';
