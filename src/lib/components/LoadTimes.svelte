@@ -1,6 +1,9 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { setRawCSTimerData } from '$lib/solves';
+
+	import IconCard from '$lib/components/IconCard.svelte';
+
 	let files: FileList;
 	let errorMessage: string;
 
@@ -23,11 +26,16 @@
 </script>
 
 <div class="modal-background">
-	<div class="container">
-		<div class="button">
-			<label for="file-upload"> Upload csTimer-file </label>
-			<input id="file-upload" name="file-upload" bind:files type="file" />
-		</div>
+	<div>
+		<label for="file-upload" class="card">
+			<span class="card-svg-top">
+				<i class="fa-solid fa-upload"></i>
+			</span>
+			<div class="card-body">
+				<h2 class="card-title">Upload csTimer-file</h2>
+			</div>
+		</label>
+		<input id="file-upload" name="file-upload" bind:files type="file" />
 
 		{#if errorMessage}
 			<p class="error">
@@ -38,36 +46,44 @@
 </div>
 
 <style>
-    .modal-background {
-        background-color: rgba(0, 0, 0, 0.6);
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
+	.modal-background {
+		background-color: rgba(0, 0, 0, 0.6);
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100vw;
+		height: 100vh;
 
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-	.container {
 		display: flex;
-		flex-direction: column;
 		align-items: center;
 		justify-content: center;
 	}
-
-	.button {
-		display: inline-block;
-		border-radius: 4px;
+	.card {
+		display: flex;
+		align-items: center;
 		background-color: #555555;
-		border: none;
+		border-radius: 4px;
+		padding: 5px 10px;
+		text-decoration: none;
+	}
+
+	.card > *:not(:last-child)::after {
+		content: '';
+		border-left: 2px solid #ffffff;
+		margin: 0 10px;
+	}
+
+	.card-title {
+		font-weight: 1000;
+		line-height: 1.2;
+		font-size: 2rem;
 		color: #ffffff;
+	}
+
+	.card-svg-top {
 		text-align: center;
-		font-size: 42px;
-		transition: all 0.5s;
-		cursor: pointer;
+		font-size: 50px;
+		color: #fff;
 	}
 
 	label {
