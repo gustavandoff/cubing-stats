@@ -19,12 +19,12 @@
 		type: 'line';
 	}
 
-	let series: SeriesOption[];
-	let dates: string[];
+	let series: SeriesOption[] = [];
+	let dates: string[] = [];
 
-	$: {
-		console.log('Starting loading times');
-		const startTime = new Date().getTime();
+	let loading = true;
+
+	const setUpOptions = async () => {
 		const splitStatTypes = statTypes.split(';');
 
 		let tempSeries: TempSeries[] = [];
@@ -81,24 +81,40 @@
 
 		dates = tempDates;
 
-		const time = new Date().getTime() - startTime;
-		console.log(`Done in ${time}ms`);
-	}
-
-	$: options = {
-		xAxis: {
-			data: dates,
-			type: 'category'
-		},
-		yAxis: {
-			type: 'value'
-		},
-		series
+		options = {
+			xAxis: {
+				data: dates,
+				type: 'category'
+			},
+			yAxis: {
+				type: 'value'
+			},
+			series
+		};
 	};
+
+	$: {
+		loading = true;
+
+		console.log('Starting loading times');
+		console.log('url params', statTypes);
+		const startTime = new Date().getTime();
+
+		setUpOptions().then(() => {
+			setTimeout(() => {
+				loading = false;
+
+				const time = new Date().getTime() - startTime;
+				console.log(`Done in ${time}ms`);
+			}, 0);
+		});
+	}
 </script>
 
 <div class="app">
-	<Chart {options} />
+	{#if !loading}
+		<Chart {options} />
+	{/if}
 </div>
 
 <style>
