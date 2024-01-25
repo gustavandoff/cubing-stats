@@ -181,3 +181,22 @@ export const getAllAoX = (x: number, solves: Solve[]): Solve[] => {
 	console.log('aoXs', aoXs);
 	return aoXs;
 };
+
+export const getAllPbs = (solves: Solve[]): Solve[] => {
+	console.log('Starting getAllPbs');
+	const startTime = new Date().getTime();
+	const pbs: Solve[] = [];
+	let best = Infinity;
+
+	solves.forEach((solve) => {
+		if (solve.timeInHundredths < best) {
+			best = solve.timeInHundredths;
+			pbs.push(solve);
+		}
+	});
+
+	const time = new Date().getTime() - startTime;
+	console.log(`getAllPbs Done in ${time}ms`);
+	console.log('pbs', pbs);
+	return pbs;
+}
