@@ -10,7 +10,6 @@
 	}
 
 	$: showLoadTimes = browser && !localStorage.getItem('rawCSTimerData');
-	$: currentUrl = browser ? window.location.origin : '';
 </script>
 
 <div class="stat-list" class:inactive={showLoadTimes}>
