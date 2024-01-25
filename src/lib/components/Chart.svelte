@@ -3,7 +3,7 @@
 	import type { SeriesOption } from 'echarts';
 	import { goto } from '$app/navigation';
 
-	import { formatedCSTimerData } from '$lib/solves';
+	import { formattedCSTimerData } from '$lib/solves';
 	import { getAllAoX } from '$lib/utils';
 
 	export let statTypes: string;
@@ -36,7 +36,7 @@
 				if (incorrectAvgCount(avgCount)) {
 					goto('/');
 				} else {
-					const currentSolves = getAllAoX(avgCount, $formatedCSTimerData[0].solves);
+					const currentSolves = getAllAoX(avgCount, $formattedCSTimerData[0].solves);
 
 					const newTimes = currentSolves.map((solve) => solve.time);
 					const curruntDates = currentSolves.map((solve) => solve.date);

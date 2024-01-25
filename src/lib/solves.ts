@@ -14,19 +14,19 @@ export const setRawCSTimerData = (data: any) => {
 	localStorage.setItem('csSessionData', JSON.stringify(tempSessionData));
 };
 
-export const formatedCSTimerData: Readable<Session[]> = derived(
+export const formattedCSTimerData: Readable<Session[]> = derived(
 	[csSessionData, rawCSTimerData],
 	([$csSessionData, $rawCSTimerData], set) => {
-		let formatedData: Session[] = [];
+		let formattedData: Session[] = [];
 
 		for (let i = 1; i < $csSessionData.length; i++) {
 			const sessionName = $csSessionData[i];
 			const session = $rawCSTimerData['session' + i];
 
-			let formatedSession: Solve[] = [];
+			let formattedSession: Solve[] = [];
 
 			session.forEach((solve: SessionSolve) => {
-				formatedSession.push({
+				formattedSession.push({
 					time: convertHundredths(solve[0][1]),
 					timeInHundredths: Math.floor(solve[0][1] / 10),
 					scramble: solve[1],
@@ -35,23 +35,23 @@ export const formatedCSTimerData: Readable<Session[]> = derived(
 				});
 			});
 
-			if (formatedSession.length !== 0) {
-				formatedData.push({
+			if (formattedSession.length !== 0) {
+				formattedData.push({
 					sessionName: '' + sessionName,
-					solves: formatedSession
+					solves: formattedSession
 				});
 			}
 		}
-		set(formatedData);
+		set(formattedData);
 	}
 );
 
-export const allSinglePBs: Readable<Session[]> = derived(formatedCSTimerData, ($formatedCSTimerData, set) => {
-	const data = $formatedCSTimerData;
+export const allSinglePBs: Readable<Session[]> = derived(formattedCSTimerData, ($formattedCSTimerData, set) => {
+	const data = $formattedCSTimerData;
 	let allPBs: Session[] = [];
-	console.log('$formatedCSTimerData: ', $formatedCSTimerData);
+	console.log('$formattedCSTimerData: ', $formattedCSTimerData);
 	
-	$formatedCSTimerData.forEach((session) => {
+	$formattedCSTimerData.forEach((session) => {
 		let pbsInThisSession: Solve[] = [];
 		let currentPB: Solve | null = null;
 
