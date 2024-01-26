@@ -37,8 +37,6 @@
 			};
 		});
 
-		console.log('splitStatTypes', splitStatTypes);
-
 		const calculatedAverages: { [index: string]: Solve[] } = {};
 
 		let tempSeries: TempSeries[] = [];
@@ -71,7 +69,24 @@
 						});
 					}
 					break;
+				case 's':
+					const newTimes = $formattedCSTimerData[0].solves.map((solve) => solve.time);
+					const currentDates = $formattedCSTimerData[0].solves.map((solve) => solve.date);
 
+					let i = 0;
+
+					while (currentDates[i] || tempDates[i]) {
+						if (currentDates[i] < tempDates[i] || !tempDates[i]) {
+							tempDates.splice(i, 0, currentDates[i]);
+						}
+						i++;
+					}
+
+					tempSeries.push({
+						times: newTimes,
+						dates: currentDates,
+						type: 'line'
+					});
 				default:
 					break;
 			}
