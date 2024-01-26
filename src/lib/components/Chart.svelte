@@ -39,34 +39,41 @@
 
 		console.log('splitStatTypes', splitStatTypes);
 
+		const calculatedAverages: { [index: string]: Solve[] } = {};
+
 		let tempSeries: TempSeries[] = [];
 		let tempDates: string[] = [];
 
 		statTypesWithValue.forEach((stat) => {
-			if (stat.name === 'a') {
-				if (incorrectAvgCount(stat.value)) {
-					goto('/');
-				} else {
-					const currentSolves = getAllAoX(stat.value, $formattedCSTimerData[0].solves);
+			switch (stat.name) {
+				case 'a':
+					if (!incorrectAvgCount(stat.value)) {
+						const currentSolves = getAllAoX(stat.value, $formattedCSTimerData[0].solves);
 
-					const newTimes = currentSolves.map((solve) => solve.time);
-					const currentDates = currentSolves.map((solve) => solve.date);
+						calculatedAverages[stat.name + stat.value] = currentSolves;
 
-					let i = 0;
+						const newTimes = currentSolves.map((solve) => solve.time);
+						const currentDates = currentSolves.map((solve) => solve.date);
 
-					while (currentDates[i] || tempDates[i]) {
-						if (currentDates[i] < tempDates[i] || !tempDates[i]) {
-							tempDates.splice(i, 0, currentDates[i]);
+						let i = 0;
+
+						while (currentDates[i] || tempDates[i]) {
+							if (currentDates[i] < tempDates[i] || !tempDates[i]) {
+								tempDates.splice(i, 0, currentDates[i]);
+							}
+							i++;
 						}
-						i++;
-					}
 
-					tempSeries.push({
-						times: newTimes,
-						dates: currentDates,
-						type: 'line'
-					});
-				}
+						tempSeries.push({
+							times: newTimes,
+							dates: currentDates,
+							type: 'line'
+						});
+					}
+					break;
+
+				default:
+					break;
 			}
 		});
 
