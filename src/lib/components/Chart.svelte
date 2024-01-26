@@ -48,7 +48,7 @@
 					if (!incorrectAvgCount(stat.value)) {
 						const currentSolves = getAllAoX(stat.value, $formattedCSTimerData[0].solves);
 
-						calculatedAverages[stat.name + stat.value] = currentSolves;
+						calculatedAverages['a' + stat.value] = currentSolves;
 
 						const newTimes = currentSolves.map((solve) => solve.time);
 						const currentDates = currentSolves.map((solve) => solve.date);
@@ -67,6 +67,31 @@
 							dates: currentDates,
 							type: 'line'
 						});
+					}
+					break;
+				case 'pba':
+					if (!incorrectAvgCount(stat.value)) {
+						const currentAverages = calculatedAverages['a' + stat.value] || getAllAoX(stat.value, $formattedCSTimerData[0].solves);
+						const averagePbs = getAllPbs(currentAverages);
+
+						const newTimes = averagePbs.map((solve) => solve.time);
+						const currentDates = averagePbs.map((solve) => solve.date);
+
+						let i = 0;
+
+						while (currentDates[i] || tempDates[i]) {
+							if (currentDates[i] < tempDates[i] || !tempDates[i]) {
+								tempDates.splice(i, 0, currentDates[i]);
+							}
+							i++;
+						}
+
+						tempSeries.push({
+							times: newTimes,
+							dates: currentDates,
+							type: 'line'
+						});
+
 					}
 					break;
 				case 's':
