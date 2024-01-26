@@ -4,7 +4,7 @@
 	import { goto } from '$app/navigation';
 
 	import { formattedCSTimerData } from '$lib/solves';
-	import { getAllAoX } from '$lib/utils';
+	import { getAllAoX, getAllPbs } from '$lib/utils';
 
 	export let statTypes: string;
 
@@ -70,23 +70,49 @@
 					}
 					break;
 				case 's':
-					const newTimes = $formattedCSTimerData[0].solves.map((solve) => solve.time);
-					const currentDates = $formattedCSTimerData[0].solves.map((solve) => solve.date);
+					if (!stat.value) {
+						const newTimes = $formattedCSTimerData[0].solves.map((solve) => solve.time);
+						const currentDates = $formattedCSTimerData[0].solves.map((solve) => solve.date);
 
-					let i = 0;
+						let i = 0;
 
-					while (currentDates[i] || tempDates[i]) {
-						if (currentDates[i] < tempDates[i] || !tempDates[i]) {
-							tempDates.splice(i, 0, currentDates[i]);
+						while (currentDates[i] || tempDates[i]) {
+							if (currentDates[i] < tempDates[i] || !tempDates[i]) {
+								tempDates.splice(i, 0, currentDates[i]);
+							}
+							i++;
 						}
-						i++;
+
+						tempSeries.push({
+							times: newTimes,
+							dates: currentDates,
+							type: 'line'
+						});
 					}
 
-					tempSeries.push({
-						times: newTimes,
-						dates: currentDates,
-						type: 'line'
-					});
+					break;
+				case 'pbs':
+					if (!stat.value) {
+						const singlePbs = getAllPbs($formattedCSTimerData[0].solves);
+						const newTimes = singlePbs.map((solve) => solve.time);
+						const currentDates = singlePbs.map((solve) => solve.date);
+
+						let i = 0;
+
+						while (currentDates[i] || tempDates[i]) {
+							if (currentDates[i] < tempDates[i] || !tempDates[i]) {
+								tempDates.splice(i, 0, currentDates[i]);
+							}
+							i++;
+						}
+
+						tempSeries.push({
+							times: newTimes,
+							dates: currentDates,
+							type: 'line'
+						});
+					}
+
 					break;
 				default:
 					break;
