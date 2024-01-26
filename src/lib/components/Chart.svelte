@@ -26,17 +26,28 @@
 
 	const setUpOptions = async () => {
 		const splitStatTypes = statTypes.split(';');
+		splitStatTypes.sort((a, b) => a.length - b.length);
+
+		const statTypesWithValue = splitStatTypes.map((stat) => {
+			const chars = stat.split('').filter((char) => isNaN(+char));
+			const numbers = stat.split('').filter((char) => !isNaN(+char));
+			return {
+				name: chars.join(''),
+				value: +numbers.join('')
+			};
+		});
+
+		console.log('splitStatTypes', splitStatTypes);
 
 		let tempSeries: TempSeries[] = [];
 		let tempDates: string[] = [];
 
-		splitStatTypes.forEach((stat) => {
-			if (stat.startsWith('ao')) {
-				const avgCount = +stat.slice(2);
-				if (incorrectAvgCount(avgCount)) {
+		statTypesWithValue.forEach((stat) => {
+			if (stat.name === 'a') {
+				if (incorrectAvgCount(stat.value)) {
 					goto('/');
 				} else {
-					const currentSolves = getAllAoX(avgCount, $formattedCSTimerData[0].solves);
+					const currentSolves = getAllAoX(stat.value, $formattedCSTimerData[0].solves);
 
 					const newTimes = currentSolves.map((solve) => solve.time);
 					const currentDates = currentSolves.map((solve) => solve.date);
