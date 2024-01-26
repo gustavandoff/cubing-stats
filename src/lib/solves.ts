@@ -26,9 +26,10 @@ export const formattedCSTimerData: Readable<Session[]> = derived(
 			let formattedSession: Solve[] = [];
 
 			session.forEach((solve: SessionSolve) => {
+				const timeInHundredths = Math.floor(solve[0][1] / 10);
 				formattedSession.push({
-					time: convertHundredths(solve[0][1]),
-					timeInHundredths: Math.floor(solve[0][1] / 10),
+					time: convertHundredths(timeInHundredths),
+					timeInHundredths: timeInHundredths,
 					scramble: solve[1],
 					comment: solve[2],
 					date: convertDate(solve[3])
