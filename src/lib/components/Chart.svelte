@@ -87,6 +87,7 @@
 						dates: currentDates,
 						type: 'line'
 					});
+					break;
 				default:
 					break;
 			}
