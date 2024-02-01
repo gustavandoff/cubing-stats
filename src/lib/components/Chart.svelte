@@ -42,6 +42,26 @@
 		let tempSeries: TempSeries[] = [];
 		let tempDates: string[] = [];
 
+		const addSolvesToGraph = (solves: Solve[]) => {
+			const times = solves.map((solve) => solve.time);
+			const currentDates = solves.map((solve) => solve.date);
+
+			let i = 0;
+
+			while (currentDates[i] || tempDates[i]) {
+				if (currentDates[i] < tempDates[i] || !tempDates[i]) {
+					tempDates.splice(i, 0, currentDates[i]);
+				}
+				i++;
+			}
+
+			tempSeries.push({
+				times: times,
+				dates: currentDates,
+				type: 'line'
+			});
+		};
+
 		statTypesWithValue.forEach((stat) => {
 			switch (stat.name) {
 				case 'a':
@@ -50,92 +70,26 @@
 
 						calculatedAverages['a' + stat.value] = currentSolves;
 
-						const newTimes = currentSolves.map((solve) => solve.time);
-						const currentDates = currentSolves.map((solve) => solve.date);
-
-						let i = 0;
-
-						while (currentDates[i] || tempDates[i]) {
-							if (currentDates[i] < tempDates[i] || !tempDates[i]) {
-								tempDates.splice(i, 0, currentDates[i]);
-							}
-							i++;
-						}
-
-						tempSeries.push({
-							times: newTimes,
-							dates: currentDates,
-							type: 'line'
-						});
+						addSolvesToGraph(currentSolves);
 					}
 					break;
 				case 'pba':
 					if (!incorrectAvgCount(stat.value)) {
 						const currentAverages = calculatedAverages['a' + stat.value] || getAllAoX(stat.value, $formattedCSTimerData[0].solves);
 						const averagePbs = getAllPbs(currentAverages);
-
-						const newTimes = averagePbs.map((solve) => solve.time);
-						const currentDates = averagePbs.map((solve) => solve.date);
-
-						let i = 0;
-
-						while (currentDates[i] || tempDates[i]) {
-							if (currentDates[i] < tempDates[i] || !tempDates[i]) {
-								tempDates.splice(i, 0, currentDates[i]);
-							}
-							i++;
-						}
-
-						tempSeries.push({
-							times: newTimes,
-							dates: currentDates,
-							type: 'line'
-						});
-
+						addSolvesToGraph(averagePbs);
 					}
 					break;
 				case 's':
 					if (!stat.value) {
-						const newTimes = $formattedCSTimerData[0].solves.map((solve) => solve.time);
-						const currentDates = $formattedCSTimerData[0].solves.map((solve) => solve.date);
-
-						let i = 0;
-
-						while (currentDates[i] || tempDates[i]) {
-							if (currentDates[i] < tempDates[i] || !tempDates[i]) {
-								tempDates.splice(i, 0, currentDates[i]);
-							}
-							i++;
-						}
-
-						tempSeries.push({
-							times: newTimes,
-							dates: currentDates,
-							type: 'line'
-						});
+						addSolvesToGraph($formattedCSTimerData[0].solves);
 					}
 
 					break;
 				case 'pbs':
 					if (!stat.value) {
 						const singlePbs = getAllPbs($formattedCSTimerData[0].solves);
-						const newTimes = singlePbs.map((solve) => solve.time);
-						const currentDates = singlePbs.map((solve) => solve.date);
-
-						let i = 0;
-
-						while (currentDates[i] || tempDates[i]) {
-							if (currentDates[i] < tempDates[i] || !tempDates[i]) {
-								tempDates.splice(i, 0, currentDates[i]);
-							}
-							i++;
-						}
-
-						tempSeries.push({
-							times: newTimes,
-							dates: currentDates,
-							type: 'line'
-						});
+						addSolvesToGraph(singlePbs);
 					}
 
 					break;
