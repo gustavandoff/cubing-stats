@@ -4,8 +4,10 @@
   import { createEventDispatcher } from 'svelte';
   const dispatch = createEventDispatcher();
 
+  export let timerStartKey: string = 'Space';
+  export let timerStopKey: string = 'Space';
+
   let timeElapsed = 0; // Time elapsed in milliseconds
-  let isRunning = false;
 
   let holdStartTime: number | null = null;
   let holdTimer: number | null = null;
@@ -14,31 +16,39 @@
 
   // Handle the keydown event for the space bar
   function handleKeyDown(event: KeyboardEvent) {
-    if (event.code === 'Space') {
+    if (event.code === timerStopKey && timerInterval) {
+      
       // Prevent default action (e.g., page scrolling)
       event.preventDefault();
 
-      if (isRunning) {
-        stopTimer();
+      stopTimer();
+      return;
+    }
+
+    if (event.code === timerStartKey) {
+      // Prevent default action (e.g., page scrolling)
+      event.preventDefault();
+
+      if (timerInterval) {
         return;
       }
 
-      // Ignore if already holding the space bar
+      // Ignore if already holding the start key
       if (holdStartTime !== null) return;
 
       holdStartTime = Date.now();
       heldLongEnough = false;
 
-      // Set a timer to check if space bar is held for at least 1.5 seconds
+      // Set a timer to check if start key is held for at least 300 milliseconds
       holdTimer = window.setTimeout(() => {
         heldLongEnough = true;
       }, 300);
-    }
+    }    
   }
 
   // Handle the keyup event for the space bar
   function handleKeyUp(event: KeyboardEvent) {
-    if (event.code === 'Space') {
+    if (event.code === timerStartKey) {
       event.preventDefault();
 
       if (holdTimer !== null) {
@@ -48,7 +58,7 @@
 
       holdStartTime = null;
 
-      if (heldLongEnough) {
+      if (heldLongEnough && !timerInterval) {
         startTimer();
       }
     }
@@ -56,7 +66,6 @@
 
   // Start the timer
   function startTimer() {
-    isRunning = true;
     timeElapsed = 0;
     const startTime = Date.now();
 
@@ -68,8 +77,7 @@
   // Stop the timer
   function stopTimer() {
     heldLongEnough = false;
-    isRunning = false;
-    if (timerInterval !== null) {
+    if (timerInterval) {
       clearInterval(timerInterval);
       timerInterval = null;
     }
