@@ -4,6 +4,7 @@
 	import { rawCSTimerData } from '$lib/solves';
 
 	import Timer from '$lib/components/timer/Timer.svelte';
+	import SolvesList from '$lib/components/timer/SolvesList.svelte';
 
 	import { draw2x2Scramble, draw3x3Scramble, get2x2Scramble, get3x3Scramble } from '$lib/scrambler';
 
@@ -83,13 +84,12 @@
 			nextScramble();
 			return;
 		}
-		
+
 		battlersFinished++;
 		if (battlersFinished >= 2) {
 			battlersFinished = 0;
 			nextScramble();
 		}
-		
 	};
 
 	onMount(() => {
@@ -99,45 +99,76 @@
 	});
 </script>
 
-<div class="container">
-	<div class="scramble-container">
-		<!-- <div class="puzzle-selector">
-			<select bind:value={puzzleType}>
-				<option value="3">3x3</option>
-				<option value="2">2x2</option>
-			</select>
-		</div> -->
-		<div class="scramble">
-			<button class={'change-scramble ' + (scrambleIndex === 0 && 'disabled')} on:click={prevScramble}>
-				<i class="fa-solid fa-backward-step"></i>
-			</button>
-			<span>
-				{scramble}
-			</span>
-			<button class="change-scramble" on:click={nextScramble}>
-				<i class="fa-solid fa-forward-step"></i>
-			</button>
+<div class="wrapper">
+	<div></div>
+
+	<div class="container-center">
+		<div class="scramble-container">
+			<!-- <div class="puzzle-selector">
+				<select bind:value={puzzleType}>
+					<option value="3">3x3</option>
+					<option value="2">2x2</option>
+				</select>
+			</div> -->
+			<div class="scramble">
+				<button
+					class={'change-scramble ' + (scrambleIndex === 0 && 'disabled')}
+					on:click={prevScramble}
+				>
+					<i class="fa-solid fa-backward-step"></i>
+				</button>
+				<span>
+					{scramble}
+				</span>
+				<button class="change-scramble" on:click={nextScramble}>
+					<i class="fa-solid fa-forward-step"></i>
+				</button>
+			</div>
 		</div>
+
+		<div class={'timer-container' + (battleMode && ' battle-mode')}>
+			<Timer
+				on:time={(e) => saveTime(e.detail)}
+				timerStartKey={battleMode && battlersFinished === 1 ? '' : 'Space'}
+			/>
+
+			{#if battleMode}
+				<Timer
+					on:time={(e) => saveTime(e.detail)}
+					timerStartKey={battleMode && battlersFinished === 1 ? '' : 'Space'}
+					timerStopKey="Enter"
+				/>
+			{/if}
+		</div>
+	</div>
+
+	<div class="container-right">
+		<SolvesList />
 
 		<div class="drawn-scramble">
 			{@html drawnScramble}
 		</div>
 	</div>
-	<div class={"timer-container" + (battleMode && ' battle-mode')}>
-		<Timer on:time={(e) => saveTime(e.detail)} timerStartKey={battleMode && battlersFinished === 1 ? '' : 'Space'} />
-		
-		{#if battleMode}
-			<Timer on:time={(e) => saveTime(e.detail)} timerStartKey={battleMode && battlersFinished === 1 ? '' : 'Space'} timerStopKey='Enter' />
-		{/if}
-	</div>
 </div>
 
 <style>
-	.container {
+	.wrapper {
+		height: 100vh;
+		display: grid;
+		grid-template-columns: 1fr auto 1fr;
+	}
+	.container-center {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		justify-content: center;
+	}
+
+	.container-right {
+		display: flex;
+		flex-direction: column;
+		align-items: end;
+		justify-content: space-around;
+		padding-right: 20px;
 	}
 
 	.scramble-container {
@@ -186,12 +217,5 @@
 	.disabled {
 		pointer-events: none;
 		color: #555555;
-	}
-
-	.drawn-scramble {
-		text-align: right;
-		position: absolute;
-		right: 20px;
-		bottom: 20px;
 	}
 </style>
