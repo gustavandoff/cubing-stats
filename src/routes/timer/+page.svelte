@@ -5,6 +5,9 @@
 
 	import { draw2x2Scramble, draw3x3Scramble, get2x2Scramble, get3x3Scramble } from '$lib/scrambler';
 
+	let battleMode = false;
+	let battlersFinished = 0;
+
 	let puzzleType = '3';
 
 	let scrambleIndex = 0;
@@ -63,7 +66,18 @@
 
 	const saveTime = (time: number) => {
 		console.log('time: ', time);
-		nextScramble();
+
+		if (!battleMode) {
+			nextScramble();
+			return;
+		}
+		
+		battlersFinished++;
+		if (battlersFinished >= 2) {
+			battlersFinished = 0;
+			nextScramble();
+		}
+		
 	};
 
 	onMount(() => {
@@ -97,8 +111,12 @@
 			{@html drawnScramble}
 		</div>
 	</div>
-	<div class="timer-container">
-		<Timer on:time={(e) => saveTime(e.detail)} />
+	<div class={"timer-container" + (battleMode && ' battle-mode')}>
+		<Timer on:time={(e) => saveTime(e.detail)} timerStartKey={battleMode && battlersFinished === 1 ? '' : 'Space'} />
+		
+		{#if battleMode}
+			<Timer on:time={(e) => saveTime(e.detail)} timerStartKey={battleMode && battlersFinished === 1 ? '' : 'Space'} timerStopKey='Enter' />
+		{/if}
 	</div>
 </div>
 
@@ -118,6 +136,11 @@
 
 	.timer-container {
 		margin-top: 10vh;
+
+		&.battle-mode {
+			display: flex;
+			gap: 50px;
+		}
 	}
 
 	.scramble {
