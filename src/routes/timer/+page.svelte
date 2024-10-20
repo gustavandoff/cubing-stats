@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
+	import { rawCSTimerData } from '$lib/solves';
+
 	import Timer from '$lib/components/timer/Timer.svelte';
 
 	import { draw2x2Scramble, draw3x3Scramble, get2x2Scramble, get3x3Scramble } from '$lib/scrambler';
@@ -68,6 +70,16 @@
 		console.log('time: ', time);
 
 		if (!battleMode) {
+			rawCSTimerData.update((data) => {
+				const newSolve: SessionSolve = [
+					[0, time],
+					scramble,
+					"",
+					Math.floor(new Date().getTime()/1000)
+				];
+				data['session1'].push(newSolve);
+				return data;
+			});
 			nextScramble();
 			return;
 		}
