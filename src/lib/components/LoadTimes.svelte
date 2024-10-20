@@ -74,7 +74,7 @@
 	}
 
 	.card-title {
-		font-weight: 1000;
+		font-weight: 700;
 		line-height: 1.2;
 		font-size: 2rem;
 		color: #ffffff;
