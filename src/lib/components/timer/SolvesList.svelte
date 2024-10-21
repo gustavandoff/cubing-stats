@@ -82,6 +82,9 @@
 </script>
 
 <ul>
+	<h2>
+		History
+	</h2>
 	<SolveListTimePeriod solves={todaySolves} title="Today" />
 	<SolveListTimePeriod solves={yesterDaySolves} title="Yesterday" />
 	<SolveListTimePeriod solves={thisWeekSolves} title="This week" />
@@ -91,7 +94,15 @@
 </ul>
 
 <style>
+
+	h2 {
+		color: var(--greyed-color);
+	}
+
 	ul {
+		border: 1px solid var(--greyed-color);
+		border-radius: 5px;
+
 		list-style-type: none;
 		padding: 10px;
 

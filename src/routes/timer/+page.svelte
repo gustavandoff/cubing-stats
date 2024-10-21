@@ -216,6 +216,6 @@
 
 	.disabled {
 		pointer-events: none;
-		color: #555555;
+		color: var(--greyed-color);
 	}
 </style>

@@ -13,7 +13,7 @@
   li {
     box-sizing: border-box;
     padding: 0.5rem;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid var(--greyed-color);
   }
 
   .solve-time-container {

@@ -57,7 +57,7 @@
 
 	h2 {
 		cursor: pointer;
-		color: rgb(116, 116, 116);
+		color: var(--greyed-color);
 
 		font-size: 1rem;
 	}
