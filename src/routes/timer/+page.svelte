@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
-	import { rawCSTimerData } from '$lib/solves';
+	import { addSolve } from '$lib/solves';
 
 	import Timer from '$lib/components/timer/Timer.svelte';
 	import SolvesList from '$lib/components/timer/SolvesList.svelte';
@@ -71,16 +71,13 @@
 		console.log('time: ', time);
 
 		if (!battleMode) {
-			rawCSTimerData.update((data) => {
-				const newSolve: SessionSolve = [
-					[0, time],
-					scramble,
-					"",
-					Math.floor(new Date().getTime()/1000)
-				];
-				data['session1'].push(newSolve);
-				return data;
-			});
+			const newSolve: SessionSolve = [
+				[0, time],
+				scramble,
+				"",
+				Math.floor(new Date().getTime()/1000)
+			];
+			addSolve(1, newSolve);
 			nextScramble();
 			return;
 		}
