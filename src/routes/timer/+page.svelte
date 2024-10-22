@@ -208,7 +208,7 @@
 		border: none;
 
 		&:hover {
-			color: #555555;
+			color: var(--hovered-color);
 		}
 	}
 
