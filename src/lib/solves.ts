@@ -14,6 +14,22 @@ export const setRawCSTimerData = (data: any) => {
 	localStorage.setItem('csSessionData', JSON.stringify(tempSessionData));
 };
 
+export const addSolve = (sessionIndex: number, solve: SessionSolve) => {
+	rawCSTimerData.update(data => {
+		data['session' + sessionIndex].push(solve);
+		return data;
+	});
+}
+
+export const removeSolve = (sessionIndex: number, solve: SessionSolve) => {
+	rawCSTimerData.update(data => {
+		data['session' + sessionIndex] = data['session' + sessionIndex].filter((s: SessionSolve) => 
+			!(s[0][1] === solve[0][1] && s[1] === solve[1] && s[2] === solve[2] && s[3] === solve[3])
+		);
+		return data;
+	});
+}
+
 export const formattedCSTimerData: Readable<Session[]> = derived(
 	[csSessionData, rawCSTimerData],
 	([$csSessionData, $rawCSTimerData], set) => {
