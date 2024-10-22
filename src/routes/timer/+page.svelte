@@ -166,6 +166,7 @@
 		align-items: end;
 		justify-content: space-around;
 		padding-right: 20px;
+		padding-top: 3rem;
 	}
 
 	.scramble-container {

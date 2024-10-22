@@ -4,6 +4,7 @@
 	import '@fortawesome/fontawesome-free/css/all.min.css'
 
 	import LoadTimes from '$lib/components/LoadTimes.svelte';
+	import LoginSignupButtons from '$lib/components/login/LoginSignupButtons.svelte';
 
 	import { rawCSTimerData, setRawCSTimerData } from '$lib/solves';
 
@@ -17,5 +18,6 @@
 {#if showLoadTimes}
 	<LoadTimes />
 {/if}
+<LoginSignupButtons />
 
 <slot />
