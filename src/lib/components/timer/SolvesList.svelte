@@ -108,5 +108,7 @@
 
 		overflow: auto;
 		max-height: 50vh;
+		width: 90%;
+		max-width: 15rem;
 	}
 </style>
