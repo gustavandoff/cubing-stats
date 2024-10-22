@@ -3,6 +3,8 @@
 	import { draw3x3Scramble } from '$lib/scrambler';
   import { removeSolve } from '$lib/solves';
 
+	import Button from '../Button.svelte';
+
 	export let solve: Solve;
 	export let onClose: () => void;
 	export let popupParent: HTMLElement;
@@ -45,10 +47,10 @@
 		<span class="date">{solve.date}</span>
 		<div class="solve-control-group">
       <div>
-        <button>+2</button>
-        <button>DNF</button>
+        <Button>+2</Button>
+        <Button>DNF</Button>
       </div>
-			<button class="delete-button" on:click={handleDelete}>Delete</button>
+			<Button destructive on:click={handleDelete}>Delete</Button>
 		</div>
 	</div>
 </div>
@@ -91,32 +93,4 @@
     justify-content: space-between;
 	}
 
-	button {
-		background-color: #333333;
-		color: #fff;
-		border: none;
-		border-radius: 0.25rem;
-		padding: 0.5rem 1rem;
-		cursor: pointer;
-
-		&:hover {
-			background-color: #444444;
-		}
-
-		&:active {
-			background-color: #222222;
-		}
-	}
-
-	.delete-button {
-		background-color: #ff0000;
-
-		&:hover {
-			background-color: #cc0000;
-		}
-
-		&:active {
-			background-color: #aa0000;
-		}
-	}
 </style>
