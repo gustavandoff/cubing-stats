@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
 	import { draw3x3Scramble } from '$lib/scrambler';
+  import { removeSolve } from '$lib/solves';
 
 	export let solve: Solve;
 	export let onClose: () => void;
@@ -18,6 +19,11 @@
 			onClose();
 		}
 	}
+
+  function handleDelete() {
+    removeSolve(1, solve.scramble || '', solve.timeInHundredths);
+    onClose();
+  }
 
 	onMount(() => {
 		document.addEventListener('click', handleClickOutside);
@@ -42,7 +48,7 @@
         <button>+2</button>
         <button>DNF</button>
       </div>
-			<button class="delete-button">Delete</button>
+			<button class="delete-button" on:click={handleDelete}>Delete</button>
 		</div>
 	</div>
 </div>
