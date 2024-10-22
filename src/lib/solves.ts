@@ -24,7 +24,7 @@ export const addSolve = (sessionIndex: number, solve: SessionSolve) => {
 export const removeSolve = (sessionIndex: number, scramble: string, time: number) => {
 	rawCSTimerData.update(data => {
 		data['session' + sessionIndex] = data['session' + sessionIndex].filter((s: SessionSolve) => 
-			!((s[0][1]).toString().substring(0, 4) === time.toString() && s[1] === scramble)
+			!((s[0][1]).toString().substring(0, time.toString().length) === time.toString() && s[1] === scramble)
 		);
 		return data;
 	});
