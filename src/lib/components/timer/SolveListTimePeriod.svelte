@@ -1,15 +1,33 @@
 <script lang="ts">
-	import BaseCard from '../BaseCard.svelte';
+	import { onMount } from 'svelte';
 	import SolvesListItem from './SolvesListItem.svelte';
 
 	export let solves: Solve[] = [];
 	export let title = '';
 
-	let showTimes = solves.length < 200;
+	let showTimes = false;
+	let renderTimes = false;
+	
+	let renderTimesTimeout: NodeJS.Timeout;
 
 	function toggleShowTimes() {
 		showTimes = !showTimes;
 	}
+
+	$: {
+		if (showTimes === false && renderTimes === true) {
+			renderTimesTimeout = setTimeout(() => {
+				renderTimes = false;
+			}, 300);
+		} else if (showTimes === true && renderTimes === false) {
+			clearTimeout(renderTimesTimeout);
+			renderTimes = true;
+		}
+	}
+
+	onMount(() => {
+		showTimes = solves.length < 200;
+	});
 </script>
 
 {#if solves.length > 0}
@@ -24,11 +42,11 @@
 		</h2>
     
 		<ul class={showTimes ? 'open' : ''} style="--height:{solves.length};">
-			<!-- {#if showTimes} -->
-			{#each solves as solve}
-				<SolvesListItem {solve} />
-			{/each}
-			<!-- {/if} -->
+			{#if renderTimes}
+				{#each solves as solve}
+					<SolvesListItem {solve} />
+				{/each}
+			{/if}
 		</ul>
 	</li>
 {/if}
