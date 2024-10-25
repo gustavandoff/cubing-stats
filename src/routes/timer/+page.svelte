@@ -15,7 +15,7 @@
 
 	let scrambleIndex = 0;
 	let scrambleMemory = 5;
-	let scrambleList: string[] = Array.from({ length: scrambleMemory }, () => getScramble());
+	let scrambleList: string[] = Array.from({ length: scrambleMemory });
 	
 	let drawnScramble = '';
 	let scramble = '';
@@ -91,6 +91,7 @@
 
 	onMount(() => {
 		//genScramble();
+		scrambleList = Array.from({ length: scrambleMemory }).map(() => getScramble());
 		scramble = scrambleList[scrambleIndex];
 		drawnScramble = draw3x3Scramble(scramble);
 	});
