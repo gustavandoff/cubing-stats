@@ -10,10 +10,12 @@
 	let thisYearSolves: Solve[] = [];
 	let allTimeSolves: Solve[] = [];
 
+	let minTime = '';
+	let maxTime = '';
+
 	$: {
 		if ($formattedCSTimerData[0]?.solves) {
-			const solvesList = $formattedCSTimerData[0].solves;
-			solvesList.reverse();
+			const solvesList = $formattedCSTimerData[0].solves.reverse();
 
 			todaySolves = [];
 			yesterDaySolves = [];
@@ -30,6 +32,14 @@
 			today.setDate(new Date().getDate());
 			
 			solvesList.forEach(solve => {
+				if (minTime && solve.timeInHundredths < Number(minTime)) {
+					return;
+				}
+
+				if (maxTime && solve.timeInHundredths > Number(maxTime)) {
+					return;
+				}
+
 				const solveDate = new Date(solve.date);
 
 				if (
@@ -65,6 +75,10 @@
 	<h2>
 		History
 	</h2>
+	<div>
+		<input type="text" placeholder="Min time" bind:value={minTime}>
+		<input type="text" placeholder="Max time" bind:value={maxTime}>
+	</div>
 	<SolveListTimePeriod solves={todaySolves} title="Today" />
 	<SolveListTimePeriod solves={yesterDaySolves} title="Yesterday" />
 	<SolveListTimePeriod solves={thisWeekSolves} title="This week" />
