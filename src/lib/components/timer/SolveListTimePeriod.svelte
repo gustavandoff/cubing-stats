@@ -25,6 +25,10 @@
 		}
 	}
 
+	$: {
+		showTimes = solves.length < 200;
+	}
+
 	onMount(() => {
 		showTimes = solves.length < 200;
 	});
