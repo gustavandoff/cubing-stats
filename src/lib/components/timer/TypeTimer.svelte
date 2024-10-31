@@ -7,6 +7,7 @@
   function handleKeydown(e: KeyboardEvent) {
     if (e.key === 'Enter') {
 
+      inputTime = inputTime.replace(/\D/g, '');
       if (inputTime.length === 0) {
         return;
       }
