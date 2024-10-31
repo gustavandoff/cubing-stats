@@ -28,7 +28,7 @@ function handleClick() {
 
 <Modal on:close={handleClose}>
   <Form>
-    <FormTitle>Signup</FormTitle>
+    <FormTitle>Sign up</FormTitle>
     <FormInput bind:value={username} type="text" placeholder="Username" required />
     <FormInput bind:value={password} type="password" placeholder="Password" required />
     <FormInput bind:value={confirmPassword} type="password" placeholder="Confirm password" required />

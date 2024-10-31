@@ -27,9 +27,9 @@ function handleClick() {
 
 <Modal on:close={handleClose}>
   <Form>
-    <FormTitle>Login</FormTitle>
+    <FormTitle>Log in</FormTitle>
     <FormInput bind:value={username} type="text" placeholder="Username" required />
     <FormInput bind:value={password} type="password" placeholder="Password" required />
-    <FormButton type="submit" on:click={handleClick}>Login</FormButton>
+    <FormButton type="submit" on:click={handleClick}>Log in</FormButton>
   </Form>
 </Modal>
