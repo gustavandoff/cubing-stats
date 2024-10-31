@@ -41,24 +41,6 @@
 		}
 	}
 
-	function gen3x3Scramble() {
-		scramble = get3x3Scramble();
-		drawnScramble = draw3x3Scramble(scramble);
-	}
-
-	function gen2x2Scramble() {
-		scramble = get2x2Scramble();
-		drawnScramble = draw2x2Scramble(scramble);
-	}
-
-	function genScramble() {
-		if (puzzleType === '3') {
-			gen3x3Scramble();
-		} else {
-			gen2x2Scramble();
-		}
-	}
-
 	function getScramble(): string {
 		if (puzzleType === '3') {
 			return get3x3Scramble();
@@ -90,7 +72,6 @@
 	};
 
 	onMount(() => {
-		//genScramble();
 		scrambleList = Array.from({ length: scrambleMemory }).map(() => getScramble());
 		scramble = scrambleList[scrambleIndex];
 		drawnScramble = draw3x3Scramble(scramble);
