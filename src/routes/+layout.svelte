@@ -5,6 +5,8 @@
 
 	import LoadTimes from '$lib/components/LoadTimes.svelte';
 	import LoginSignupButtons from '$lib/components/login/LoginSignupButtons.svelte';
+	import LoginForm from '$lib/components/login/LoginForm.svelte';
+	import SignupForm from '$lib/components/login/SignupForm.svelte';
 
 	import { rawCSTimerData, setRawCSTimerData } from '$lib/solves';
 
@@ -13,11 +15,33 @@
 	}
 
 	$: showLoadTimes = browser && !localStorage.getItem('rawCSTimerData') && !$rawCSTimerData;
+
+	let showLogin = false;
+	let showSignup = false;
+
+	function setShowLogin(show: boolean) {
+		showLogin = show;
+	}
+
+	function setShowSignup(show: boolean) {
+		showSignup = show;
+	}
 </script>
 
 {#if showLoadTimes}
 	<LoadTimes />
 {/if}
-<LoginSignupButtons />
+<LoginSignupButtons on:login={() => setShowLogin(true)} on:signup={() => setShowSignup(true)} />
+	
+
+{#if showLogin}
+	<LoginForm on:close={() => setShowLogin(false)} />
+{/if}
+
+{#if showSignup}
+	<SignupForm on:close={() => setShowSignup(false)} />
+{/if}
+
+
 
 <slot />
