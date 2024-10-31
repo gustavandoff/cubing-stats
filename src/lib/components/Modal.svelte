@@ -27,6 +27,7 @@ function closeModal() {
 		left: 0;
 		width: 100vw;
 		height: 100vh;
+    z-index: 100;
 
 		display: flex;
 		align-items: center;
