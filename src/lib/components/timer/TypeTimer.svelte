@@ -34,6 +34,7 @@
 
       inputTime = inputTime.replace(/\D/g, '');
       if (inputTime.length === 0) {
+        dispatch('time', 0);
         return;
       }
 

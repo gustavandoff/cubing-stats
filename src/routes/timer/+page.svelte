@@ -54,6 +54,11 @@
 	const saveTime = (time: number) => {
 		console.log('time: ', time);
 
+		if (time === 0) {
+			nextScramble();
+			return;
+		}
+
 		if (!battleMode) {
 			const newSolve: SessionSolve = [
 				[0, time],
