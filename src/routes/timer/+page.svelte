@@ -3,15 +3,17 @@
 
 	import { addSolve } from '$lib/solves';
 
-	import Timer from '$lib/components/timer/Timer.svelte';
 	import SolvesList from '$lib/components/timer/SolvesList.svelte';
 
 	import TimerWrapper from '$lib/components/timer/TimerWrapper.svelte';
+	import ToggleSwitch from '$lib/components/ToggleSwitch.svelte';
 
 	import { draw2x2Scramble, draw3x3Scramble, get2x2Scramble, get3x3Scramble } from '$lib/scrambler';
 
 	let battleMode = false;
 	let battlersFinished = 0;
+
+	let typeTimer = false;
 
 	let puzzleType = '3';
 
@@ -113,8 +115,9 @@
 		</div>
 
 		<div class={'timer-container'}>
-			<TimerWrapper type="type-timer" battlers={1} on:save-time={e => saveTime(e.detail)} />
+			<TimerWrapper type={typeTimer ? 'type-timer' : 'timer'} battlers={1} on:save-time={e => saveTime(e.detail)} />
 		</div>
+		<ToggleSwitch bind:checked={typeTimer} />
 	</div>
 
 	<div class="container-right">
