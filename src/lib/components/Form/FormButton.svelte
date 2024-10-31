@@ -6,7 +6,9 @@
   const dispatch = createEventDispatcher();
 </script>
 
-<button type={type} on:click={() => dispatch('click')}>Login</button>
+<button type={type} on:click={() => dispatch('click')}>
+  <slot></slot>
+</button>
 
 <style>
   button {
