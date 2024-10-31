@@ -95,7 +95,7 @@
 
 	ul {
 		border: 1px solid var(--greyed-color);
-		border-radius: 5px;
+		border-radius: var(--border-radius);
 
 		list-style-type: none;
 		padding: 10px;

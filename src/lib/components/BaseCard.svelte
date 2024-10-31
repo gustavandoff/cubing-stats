@@ -20,7 +20,7 @@
 		flex-direction: column;
 		width: 200px;
 		background-color: #555555;
-		border-radius: 4px;
+		border-radius: var(--border-radius);
 		padding: 5px;
 		text-decoration: none;
 	}

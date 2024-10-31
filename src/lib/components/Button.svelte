@@ -20,7 +20,7 @@ function handleCLick() {
     background-color: #333333;
     color: white;
     border: none;
-		border-radius: 0.25rem;
+		border-radius: var(--border-radius);
     padding: 0.5rem 1rem;
     font-size: 1rem;
     cursor: pointer;

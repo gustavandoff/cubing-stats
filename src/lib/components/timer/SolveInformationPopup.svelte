@@ -67,7 +67,7 @@
 
 		position: absolute;
 		padding: 1rem;
-		border-radius: 0.5rem;
+		border-radius: var(--border-radius);
 	}
 
 	.popup-body {

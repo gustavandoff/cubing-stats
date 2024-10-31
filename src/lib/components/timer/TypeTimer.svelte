@@ -51,7 +51,7 @@
 		margin: 0;
     width: 50rem;
     border: 1px solid var(--greyed-color);
-    border-radius: 5px;
+    border-radius: var(--border-radius);
     display: flex;
     justify-content: center;
 
