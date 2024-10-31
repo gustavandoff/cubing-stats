@@ -6,6 +6,8 @@
 	import Timer from '$lib/components/timer/Timer.svelte';
 	import SolvesList from '$lib/components/timer/SolvesList.svelte';
 
+	import TimerWrapper from '$lib/components/timer/TimerWrapper.svelte';
+
 	import { draw2x2Scramble, draw3x3Scramble, get2x2Scramble, get3x3Scramble } from '$lib/scrambler';
 
 	let battleMode = false;
@@ -105,19 +107,8 @@
 			</div>
 		</div>
 
-		<div class={'timer-container' + (battleMode && ' battle-mode')}>
-			<Timer
-				on:time={(e) => saveTime(e.detail)}
-				timerStartKey={battleMode && battlersFinished === 1 ? '' : 'Space'}
-			/>
-
-			{#if battleMode}
-				<Timer
-					on:time={(e) => saveTime(e.detail)}
-					timerStartKey={battleMode && battlersFinished === 1 ? '' : 'Space'}
-					timerStopKey="Enter"
-				/>
-			{/if}
+		<div class={'timer-container'}>
+			<TimerWrapper type="type-timer" battlers={1} on:save-time={e => saveTime(e.detail)} />
 		</div>
 	</div>
 
