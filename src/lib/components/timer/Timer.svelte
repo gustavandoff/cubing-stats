@@ -8,6 +8,7 @@
   export let timerStopKey: string = 'Space';
 
   let timeElapsed = 0; // Time elapsed in milliseconds
+  let startTime = 0; // Start time in milliseconds
 
   let holdStartTime: number | null = null;
   let holdTimer: number | null = null;
@@ -67,11 +68,11 @@
   // Start the timer
   function startTimer() {
     timeElapsed = 0;
-    const startTime = Date.now();
+    startTime = Date.now();
 
     timerInterval = window.setInterval(() => {
       timeElapsed = Date.now() - startTime;
-    }, 10); // Update every 10ms
+    }, 500);
   }
 
   // Stop the timer
@@ -81,6 +82,7 @@
       clearInterval(timerInterval);
       timerInterval = null;
     }
+    timeElapsed = Date.now() - startTime;
     dispatch('time', timeElapsed);
   }
 
@@ -91,14 +93,14 @@
     const milliseconds = timeElapsed % 1000;
     //const msString = milliseconds.toString().padStart(3, '0');
     const hundredths = Math.floor(milliseconds / 10);
-    const hundredthsString = hundredths.toString().padStart(2, '0');
+    const hundredthsString = timerInterval ? '' : '.'+hundredths.toString().padStart(2, '0');
 
     if (seconds < 60) {
-      formatedTime = `${seconds}.${hundredthsString}`;
+      formatedTime = `${seconds}${hundredthsString}`;
     } else {
       const minutes = Math.floor(seconds / 60);
       const remainingSeconds = seconds % 60;
-      formatedTime = `${minutes}:${remainingSeconds.toString().padStart(2, '0')}.${hundredthsString}`;
+      formatedTime = `${minutes}:${remainingSeconds.toString().padStart(2, '0')}${hundredthsString}`;
     }
   }
 
