@@ -62,28 +62,3 @@ export const formattedCSTimerData: Readable<Session[]> = derived(
 		set(formattedData);
 	}
 );
-
-export const allSinglePBs: Readable<Session[]> = derived(formattedCSTimerData, ($formattedCSTimerData, set) => {
-	const data = $formattedCSTimerData;
-	let allPBs: Session[] = [];
-	console.log('$formattedCSTimerData: ', $formattedCSTimerData);
-	
-	$formattedCSTimerData.forEach((session) => {
-		let pbsInThisSession: Solve[] = [];
-		let currentPB: Solve | null = null;
-
-		session.solves.forEach((solve) => {
-			if (!currentPB || solve.timeInHundredths < currentPB.timeInHundredths) {
-				pbsInThisSession.push(solve);
-				currentPB = solve;
-			}
-		});
-
-		allPBs.push({
-			sessionName: session.sessionName,
-			solves: pbsInThisSession
-		});
-	});
-
-	set(allPBs);
-});
