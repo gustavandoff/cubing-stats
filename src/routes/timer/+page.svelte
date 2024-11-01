@@ -69,7 +69,7 @@
 				"",
 				Math.floor(new Date().getTime()/1000)
 			];
-			addSolve(1, newSolve);
+			addSolve(newSolve);
 			nextScramble();
 			return;
 		}

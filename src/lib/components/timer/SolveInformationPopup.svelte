@@ -26,7 +26,7 @@
 		if (!confirm('Are you sure you want to delete this solve?')) {
 			return;
 		}
-    removeSolve(1, solve.scramble || '', solve.timeInHundredths);
+    removeSolve(solve.scramble || '', solve.timeInHundredths);
     onClose();
   }
 

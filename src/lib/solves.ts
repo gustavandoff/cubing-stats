@@ -27,15 +27,17 @@ export const setDataFromLocalStorage = () => {
 	currentSession.set(currentSessionFromLocalStorage);
 }
 
-export const addSolve = (sessionIndex: number, solve: SessionSolve) => {
+export const addSolve = (solve: SessionSolve) => {
 	rawCSTimerData.update(data => {
+		const sessionIndex = get(csSessionData).indexOf(get(currentSession));
 		data['session' + sessionIndex].push(solve);
 		return data;
 	});
 }
 
-export const removeSolve = (sessionIndex: number, scramble: string, time: number) => {
+export const removeSolve = (scramble: string, time: number) => {
 	rawCSTimerData.update(data => {
+		const sessionIndex = get(csSessionData).indexOf(get(currentSession));
 		data['session' + sessionIndex] = data['session' + sessionIndex].filter((s: SessionSolve) => 
 			!((s[0][1]).toString().substring(0, time.toString().length) === time.toString() && s[1] === scramble)
 		);
