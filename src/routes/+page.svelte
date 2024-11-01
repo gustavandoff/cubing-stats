@@ -3,12 +3,6 @@
     
 	import IconCard from '$lib/components/IconCard.svelte';
 
-	import { rawCSTimerData, setRawCSTimerData } from '$lib/solves';
-
-	$: if (browser && localStorage.getItem('rawCSTimerData') && !$rawCSTimerData) {
-		setRawCSTimerData(JSON.parse(localStorage.getItem('rawCSTimerData') as string));
-	}
-
 	$: showLoadTimes = browser && !localStorage.getItem('rawCSTimerData');
 </script>
 
