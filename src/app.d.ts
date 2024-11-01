@@ -30,6 +30,4 @@ interface SessionSolve {
 	3: number;   // date
 }
 
-interface csSessionData {
-	name: string | number;
-}
+type csSessionData = string | number;
