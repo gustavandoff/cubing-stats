@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { formattedCSTimerData } from '$lib/solves';
+	import { currentSessionData } from '$lib/solves';
 
 	import SolveListTimePeriod from './SolveListTimePeriod.svelte';
 
@@ -14,8 +14,8 @@
 	let maxTime = '';
 
 	$: {
-		if ($formattedCSTimerData[0]?.solves) {
-			const solvesList = $formattedCSTimerData[0].solves.reverse();
+		if ($currentSessionData?.solves) {
+			const solvesList = $currentSessionData.solves.reverse();
 
 			todaySolves = [];
 			yesterDaySolves = [];

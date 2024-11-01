@@ -3,7 +3,7 @@
 	import type { SeriesOption } from 'echarts';
 	import { goto } from '$app/navigation';
 
-	import { formattedCSTimerData } from '$lib/solves';
+	import { currentSessionData } from '$lib/solves';
 	import { getAllAoX, getAllPbs } from '$lib/utils';
 
 	export let statTypes: string;
@@ -66,7 +66,7 @@
 			switch (stat.name) {
 				case 'a':
 					if (!incorrectAvgCount(stat.value)) {
-						const currentSolves = getAllAoX(stat.value, $formattedCSTimerData[0].solves);
+						const currentSolves = getAllAoX(stat.value, $currentSessionData.solves);
 
 						calculatedAverages['a' + stat.value] = currentSolves;
 
@@ -75,20 +75,20 @@
 					break;
 				case 'pba':
 					if (!incorrectAvgCount(stat.value)) {
-						const currentAverages = calculatedAverages['a' + stat.value] || getAllAoX(stat.value, $formattedCSTimerData[0].solves);
+						const currentAverages = calculatedAverages['a' + stat.value] || getAllAoX(stat.value, $currentSessionData.solves);
 						const averagePbs = getAllPbs(currentAverages);
 						addSolvesToGraph(averagePbs);
 					}
 					break;
 				case 's':
 					if (!stat.value) {
-						addSolvesToGraph($formattedCSTimerData[0].solves);
+						addSolvesToGraph($currentSessionData.solves);
 					}
 
 					break;
 				case 'pbs':
 					if (!stat.value) {
-						const singlePbs = getAllPbs($formattedCSTimerData[0].solves);
+						const singlePbs = getAllPbs($currentSessionData.solves);
 						addSolvesToGraph(singlePbs);
 					}
 
