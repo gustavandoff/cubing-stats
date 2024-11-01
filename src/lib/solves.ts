@@ -1,6 +1,7 @@
 import { writable, derived, get, type Readable } from 'svelte/store';
 import { convertHundredths, convertDate } from './utils';
 
+export const currentSession = writable<string>();
 export const rawCSTimerData = writable<any>(null);
 const csSessionData = writable<csSessionData[]>([]);
 
@@ -9,9 +10,11 @@ export const setRawCSTimerData = (data: any) => {
 
 	const tempSessionData = [null, ...Object.values(JSON.parse(data.properties.sessionData)).map((session: any) => session.name)];
 	csSessionData.set(tempSessionData);
+	currentSession.set(tempSessionData[1]);
 	
 	localStorage.setItem('rawCSTimerData', JSON.stringify(data));
 	localStorage.setItem('csSessionData', JSON.stringify(tempSessionData));
+	localStorage.setItem('currentSession', tempSessionData[1]);
 };
 
 export const addSolve = (sessionIndex: number, solve: SessionSolve) => {
@@ -52,13 +55,20 @@ export const formattedCSTimerData: Readable<Session[]> = derived(
 				});
 			});
 
-			if (formattedSession.length !== 0) {
-				formattedData.push({
-					sessionName: '' + sessionName,
-					solves: formattedSession
-				});
-			}
+			formattedData.push({
+				sessionName: '' + sessionName,
+				solves: formattedSession
+			});
 		}
 		set(formattedData);
+	}
+);
+
+export const currentSessionData: Readable<Session> = derived(
+	[formattedCSTimerData, currentSession],
+	([$formattedCSTimerData, $currentSession], set) => {
+		const session = $formattedCSTimerData.find(s => s.sessionName === $currentSession) || { sessionName: '', solves: [] };
+		set(session);
+		localStorage.setItem('currentSession', session.sessionName);
 	}
 );
