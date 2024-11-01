@@ -17,6 +17,16 @@ export const setRawCSTimerData = (data: any) => {
 	localStorage.setItem('currentSession', tempSessionData[1]);
 };
 
+export const setDataFromLocalStorage = () => {
+	const rawCSTimerDataFromLocalStorage = JSON.parse(localStorage.getItem('rawCSTimerData') || '{}');
+	const csSessionDataFromLocalStorage = JSON.parse(localStorage.getItem('csSessionData') || '[]');
+	const currentSessionFromLocalStorage = localStorage.getItem('currentSession') || '';
+
+	rawCSTimerData.set(rawCSTimerDataFromLocalStorage);
+	csSessionData.set(csSessionDataFromLocalStorage);
+	currentSession.set(currentSessionFromLocalStorage);
+}
+
 export const addSolve = (sessionIndex: number, solve: SessionSolve) => {
 	rawCSTimerData.update(data => {
 		data['session' + sessionIndex].push(solve);
