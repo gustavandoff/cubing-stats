@@ -78,8 +78,8 @@
 		Session <span>{ $currentSessionData?.sessionName }</span>
 	</h2>
 	<div>
-		Solves/mean
-		<span>{ mean }/{ $currentSessionData?.sessionData.stat[0] }</span>
+		Solves / mean
+		<span>{ $currentSessionData?.sessionData.stat[0] } / { mean }</span>
 	</div>
 	<!-- <div>
 		<input type="text" placeholder="Min time" bind:value={minTime}>
