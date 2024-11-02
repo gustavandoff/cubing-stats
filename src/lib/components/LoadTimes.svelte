@@ -1,8 +1,11 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
 	import { setRawCSTimerData } from '$lib/solves';
 
-	import IconCard from '$lib/components/IconCard.svelte';
+	import Modal from '$lib/components/Modal.svelte';
+
+	import { createEventDispatcher } from 'svelte';
+
+const dispatch = createEventDispatcher();
 
 	let files: FileList;
 	let errorMessage: string;
@@ -17,18 +20,23 @@
 			errorMessage = 'Please select a valid file';
 		} else {
 			reader.onload = (e) => {
-				const data = JSON.parse(e.target?.result as string);
-				data.properties.sessionData = JSON.parse(data.properties.sessionData);
-				setRawCSTimerData(data);
+				try {
+					const data = JSON.parse(e.target?.result as string);
+					data.properties.sessionData = JSON.parse(data.properties.sessionData);
+					setRawCSTimerData(data);
+					dispatch('close');
+				} catch (error) {
+					errorMessage = 'Invalid file';
+				}
 			};
 			reader.readAsText(file);
 		}
 	}
 </script>
 
-<div class="modal-background">
-	<div>
-		<label for="file-upload" class="card">
+<Modal on:close={() => dispatch('close')}>
+	<div class="card">
+		<label for="file-upload">
 			<span class="card-svg-top">
 				<i class="fa-solid fa-upload"></i>
 			</span>
@@ -36,61 +44,48 @@
 				<h2 class="card-title">Upload csTimer-file</h2>
 			</div>
 		</label>
-		<input id="file-upload" name="file-upload" bind:files type="file" />
-
-		{#if errorMessage}
-			<p class="error">
-				{errorMessage}
-			</p>
-		{/if}
 	</div>
-</div>
+	
+	<input id="file-upload" name="file-upload" bind:files type="file" />
+
+	{#if errorMessage}
+		<p class="error">
+			{errorMessage}
+		</p>
+	{/if}
+</Modal>
 
 <style>
-	.modal-background {
-		background-color: rgba(0, 0, 0, 0.6);
-		position: fixed;
-		top: 0;
-		left: 0;
-		width: 100vw;
-		height: 100vh;
-
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
 	.card {
-		display: flex;
-		align-items: center;
-		background-color: #555555;
+		background-color: #121212;
+		padding: 1.5rem 2rem;
 		border-radius: var(--border-radius);
-		padding: 5px 10px;
-		text-decoration: none;
 	}
 
-	.card > *:not(:last-child)::after {
+	.card > label > *:not(:last-child)::after {
 		content: '';
 		border-left: 2px solid #ffffff;
-		margin: 0 10px;
+		margin: 0 1rem;
 	}
 
 	.card-title {
 		font-weight: 700;
-		line-height: 1.2;
 		font-size: 2rem;
-		color: #ffffff;
 	}
 
 	.card-svg-top {
 		text-align: center;
-		font-size: 50px;
-		color: #fff;
+		font-size: 3rem;
 	}
 
 	label {
 		cursor: pointer;
-		display: inline-block;
-		padding: 40px;
+		display: flex;
+		align-items: center;
+
+		&:hover {
+			color: var(--hovered-color);
+		}
 	}
 
 	input[type='file'] {
