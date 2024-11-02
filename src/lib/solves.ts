@@ -1,6 +1,8 @@
 import { writable, derived, get, type Readable } from 'svelte/store';
 import { convertHundredths, convertDate } from './utils';
 
+import DefaultCSTimerData from './defaultCSTimerData.json';
+
 export const currentSession = writable<string>();
 export const rawCSTimerData = writable<any>(null);
 const csSessionData = writable<csSessionData[]>([]);
@@ -18,6 +20,11 @@ export const setRawCSTimerData = (data: any) => {
 };
 
 export const setDataFromLocalStorage = () => {
+	if (!localStorage.getItem('rawCSTimerData')) {
+		setRawCSTimerData(DefaultCSTimerData);
+		return;
+	}
+
 	const rawCSTimerDataFromLocalStorage = JSON.parse(localStorage.getItem('rawCSTimerData') || '{}');
 	const csSessionDataFromLocalStorage = JSON.parse(localStorage.getItem('csSessionData') || '[]');
 	const currentSessionFromLocalStorage = localStorage.getItem('currentSession') || '';

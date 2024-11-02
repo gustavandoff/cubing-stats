@@ -10,7 +10,7 @@
 
 	import { rawCSTimerData, setDataFromLocalStorage } from '$lib/solves';
 
-	$: if (browser && localStorage.getItem('rawCSTimerData') && !$rawCSTimerData) {
+	$: if (browser && !$rawCSTimerData) {
 		setDataFromLocalStorage();
 	}
 
@@ -33,7 +33,7 @@
 	}
 </script>
 
-{#if showLoadTimes}
+{#if showUpload}
 	<LoadTimes on:close={() => setShowUpload(false)} />
 {/if}
 <LoginSignupButtons on:login={() => setShowLogin(true)} on:signup={() => setShowSignup(true)} on:upload={() => setShowUpload(true)} />
