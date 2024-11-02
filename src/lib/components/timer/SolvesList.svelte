@@ -69,16 +69,22 @@
 			});
 		}
 	}
+
+	$: mean = Math.round($currentSessionData?.sessionData.stat[2] / 10) / 100;
 </script>
 
 <ul>
 	<h2>
-		History
+		Session <span>{ $currentSessionData?.sessionName }</span>
 	</h2>
 	<div>
+		Solves/mean
+		<span>{ mean }/{ $currentSessionData?.sessionData.stat[0] }</span>
+	</div>
+	<!-- <div>
 		<input type="text" placeholder="Min time" bind:value={minTime}>
 		<input type="text" placeholder="Max time" bind:value={maxTime}>
-	</div>
+	</div> -->
 	<SolveListTimePeriod solves={todaySolves} title="Today" />
 	<SolveListTimePeriod solves={yesterDaySolves} title="Yesterday" />
 	<SolveListTimePeriod solves={thisWeekSolves} title="This week" />
@@ -90,7 +96,13 @@
 <style>
 
 	h2 {
+		font-size: 1.1rem;
 		color: var(--greyed-color);
+
+		& span {
+			font-size: 1.75rem;
+			color: #fff;
+		}
 	}
 
 	ul {
