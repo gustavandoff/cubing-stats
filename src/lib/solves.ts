@@ -110,7 +110,7 @@ const defaultCSTimerData = {
 
 export const currentSession = writable<string>();
 export const rawCSTimerData = writable<any>(null);
-const csSessionData = writable<csSessionData[]>([]);
+const sessionNames = writable<SessionName[]>([]);
 
 export const setRawCSTimerData = (data: any) => {
 	Object.values(data.properties.sessionData).forEach((session: any) => {
@@ -125,7 +125,7 @@ export const setRawCSTimerData = (data: any) => {
 	rawCSTimerData.set(data);
 
 	const tempSessionData = [null, ...Object.values(data.properties.sessionData).map((session: any) => session.name)];
-	csSessionData.set(tempSessionData);
+	sessionNames.set(tempSessionData);
 	currentSession.set(tempSessionData[1]);
 
 	localStorage.setItem('rawCSTimerData', JSON.stringify(data));
@@ -144,7 +144,7 @@ export const setStartingData = () => {
 	const currentSessionFromLocalStorage = localStorage.getItem('currentSession') || '';
 
 	rawCSTimerData.set(rawCSTimerDataFromLocalStorage);
-	csSessionData.set(csSessionDataFromLocalStorage);
+	sessionNames.set(csSessionDataFromLocalStorage);
 	currentSession.set(currentSessionFromLocalStorage);
 }
 
@@ -152,7 +152,7 @@ export const addSolve = (solve: SessionSolve) => {
 	rawCSTimerData.update(data => {
 		let sessionIndex = -1;
 
-		const sessData = get(csSessionData);
+		const sessData = get(sessionNames);
 		const currSess = get(currentSession);
 
 		for (let i = 0; i < sessData.length; i++) {
@@ -188,7 +188,7 @@ export const addSolve = (solve: SessionSolve) => {
 
 export const removeSolve = (scramble: string, time: number) => {
 	rawCSTimerData.update(data => {
-		const sessionIndex = get(csSessionData).indexOf(get(currentSession));
+		const sessionIndex = get(sessionNames).indexOf(get(currentSession));
 
 		const solve = data['session' + sessionIndex].find((s: SessionSolve) => 
 			(s[0][1]).toString().substring(0, time.toString().length) === time.toString() && s[1] === scramble
@@ -226,12 +226,12 @@ export const removeSolve = (scramble: string, time: number) => {
 }
 
 export const formattedCSTimerData: Readable<Session[]> = derived(
-	[csSessionData, rawCSTimerData],
-	([$csSessionData, $rawCSTimerData], set) => {
+	[sessionNames, rawCSTimerData],
+	([$sessionNames, $rawCSTimerData], set) => {
 		let formattedData: Session[] = [];
 
-		for (let i = 1; i < $csSessionData.length; i++) {
-			const sessionName = $csSessionData[i];
+		for (let i = 1; i < $sessionNames.length; i++) {
+			const sessionName = $sessionNames[i];
 			const session = $rawCSTimerData['session' + i];
 
 			let formattedSession: Solve[] = [];

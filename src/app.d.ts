@@ -19,7 +19,7 @@ interface Solve {
 }
 
 interface Session {
-	sessionName: string | number;
+	sessionName: SessionName;
 	solves: Solve[];
 	sessionData: {
 		date: [number | null, number | null];
@@ -37,4 +37,4 @@ interface SessionSolve {
 	3: number;   // date
 }
 
-type csSessionData = string | number;
+type SessionName = string | number;
