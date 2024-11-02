@@ -88,7 +88,9 @@
 </script>
 
 <div class="wrapper">
-	<div></div>
+	<div class="container-left">
+		<SolvesList />
+	</div>
 
 	<div class="container-center">
 		<div class="scramble-container">
@@ -121,8 +123,6 @@
 	</div>
 
 	<div class="container-right">
-		<SolvesList />
-
 		<div class="drawn-scramble">
 			{@html drawnScramble}
 		</div>
@@ -141,13 +141,21 @@
 		align-items: center;
 	}
 
+	.container-left {
+		display: flex;
+		flex-direction: column;
+		align-items: start;
+		justify-content: start;
+		padding-left: 2rem;
+		padding-top: 3rem;
+	}
+
 	.container-right {
 		display: flex;
 		flex-direction: column;
 		align-items: end;
-		justify-content: space-around;
-		padding-right: 20px;
-		padding-top: 3rem;
+		justify-content: end;
+		padding: 1rem;
 	}
 
 	.scramble-container {
@@ -172,7 +180,7 @@
 		gap: 20px;
 
 		font-size: 2rem;
-		margin-top: 30px;
+		margin-top: 2rem;
 	}
 
 	.scramble > span {

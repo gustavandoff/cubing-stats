@@ -40,21 +40,19 @@
 </script>
 
 <div class="popup-content" bind:this={popupContent}>
-	<div class="popup-body">
-		<span class="time">{solve.time}</span>
-		<span class="scramble">{solve.scramble}</span>
-		<span>
-			{@html draw3x3Scramble(solve.scramble || '')}
-		</span>
-		<span>{solve.comment}</span>
-		<span class="date">{solve.date}</span>
-		<div class="solve-control-group">
-      <div>
-        <Button>+2</Button>
-        <Button>DNF</Button>
-      </div>
-			<Button destructive on:click={handleDelete}>Delete</Button>
+	<span class="time">{solve.time}</span>
+	<span class="scramble">{solve.scramble}</span>
+	<span>
+		{@html draw3x3Scramble(solve.scramble || '')}
+	</span>
+	<span>{solve.comment}</span>
+	<span class="date">{solve.date}</span>
+	<div class="solve-control-group">
+		<div>
+			<Button>+2</Button>
+			<Button>DNF</Button>
 		</div>
+		<Button destructive on:click={handleDelete}>Delete</Button>
 	</div>
 </div>
 
@@ -63,17 +61,22 @@
 		color: #fff;
 		cursor: auto;
 
-		background-color: #555555;
+		background-color: var(--background-color);
+		border-radius: var(--border-radius);
+		border: 1px solid #ccc;
+		padding: 1rem;
+		width: 40rem;
 
 		position: absolute;
-		padding: 1rem;
-		border-radius: var(--border-radius);
-	}
+		top: 3rem;
+		left: 20rem;
+		right: 0;
 
-	.popup-body {
 		display: flex;
 		flex-direction: column;
 		gap: 1rem;
+
+		z-index: 99;
 	}
 
 	.time {

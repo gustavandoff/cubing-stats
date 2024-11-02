@@ -115,9 +115,10 @@
 
 		list-style-type: none;
 		padding: 10px;
+		margin: 0;
 
 		overflow: auto;
-		max-height: 50vh;
+		max-height: calc(100vh - 7rem);
 		width: 90%;
 		max-width: 15rem;
 	}
