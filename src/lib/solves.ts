@@ -45,7 +45,18 @@ export const setStartingData = () => {
 
 export const addSolve = (solve: SessionSolve) => {
 	rawCSTimerData.update(data => {
-		const sessionIndex = get(csSessionData).indexOf(get(currentSession));
+		let sessionIndex = -1;
+
+		const sessData = get(csSessionData);
+		const currSess = get(currentSession);
+
+		for (let i = 0; i < sessData.length; i++) {
+			if (String(sessData[i]) === String(currSess)) {
+				sessionIndex = i;
+				break;
+			}
+		}
+		
 		data['session' + sessionIndex].push(solve);
 
 		if (!data.properties.sessionData[sessionIndex].hasOwnProperty('stat')) {
@@ -57,7 +68,7 @@ export const addSolve = (solve: SessionSolve) => {
 
 		const totalSolves = data.properties.sessionData[sessionIndex].stat[0];
 		const currentAverage = data.properties.sessionData[sessionIndex].stat[2];
-		const newAverage = ((currentAverage * totalSolves) + solve[0][1]) / totalSolves;
+		const newAverage = ((currentAverage * totalSolves) + solve[0][1]) / (totalSolves + 1);
 
 		data.properties.sessionData[sessionIndex].stat[0] = totalSolves + 1;
 		data.properties.sessionData[sessionIndex].stat[2] = newAverage;
