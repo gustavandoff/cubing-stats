@@ -111,7 +111,8 @@ export const formattedCSTimerData: Readable<Session[]> = derived(
 
 			formattedData.push({
 				sessionName: '' + sessionName,
-				solves: formattedSession
+				solves: formattedSession,
+				sessionData: $rawCSTimerData.properties.sessionData[i]
 			});
 		}
 		set(formattedData);
@@ -121,7 +122,8 @@ export const formattedCSTimerData: Readable<Session[]> = derived(
 export const currentSessionData: Readable<Session> = derived(
 	[formattedCSTimerData, currentSession],
 	([$formattedCSTimerData, $currentSession], set) => {
-		const session = $formattedCSTimerData.find(s => s.sessionName === $currentSession) || { sessionName: '', solves: [] };
+		const emptySession: Session = { sessionName: '', solves: [], sessionData: { date: [null, null], name: '', opt: {}, rank: 0, stat: [0, 0, -1] } };
+		const session = $formattedCSTimerData.find(s => s.sessionName === $currentSession) || emptySession;
 		set(session);
 		localStorage.setItem('currentSession', session.sessionName);
 	}
