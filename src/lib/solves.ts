@@ -1,7 +1,7 @@
 import { writable, derived, get, type Readable } from 'svelte/store';
 import { convertHundredths, convertDate } from './utils';
 
-import DefaultCSTimerData from './defaultCSTimerData.json';
+import DefaultCSTimerData from '$lib/defaultCSTimerData.json';
 
 export const currentSession = writable<string>();
 export const rawCSTimerData = writable<any>(null);
