@@ -2,6 +2,7 @@
 	import { currentSessionData } from '$lib/solves';
 
 	import SolveListTimePeriod from './SolveListTimePeriod.svelte';
+	import SessionChooser from './SessionChooser.svelte';
 
 	let todaySolves: Solve[] = [];
 	let yesterDaySolves: Solve[] = [];
@@ -75,7 +76,10 @@
 
 <ul>
 	<h2>
-		Session <span>{ $currentSessionData?.sessionName }</span>
+		Session
+		<span>
+			<SessionChooser />
+		</span>
 	</h2>
 	<div>
 		Solves / mean
@@ -98,11 +102,6 @@
 	h2 {
 		font-size: 1.1rem;
 		color: var(--greyed-color);
-
-		& span {
-			font-size: 1.75rem;
-			color: #fff;
-		}
 	}
 
 	ul {
