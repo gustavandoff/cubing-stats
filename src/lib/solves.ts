@@ -66,9 +66,11 @@ export const addSolve = (solve: SessionSolve) => {
 			return data;
 		}
 
+		const countedTime = Math.floor(solve[0][1] / 10) * 10; // round to nearest 10ms
+
 		const totalSolves = data.properties.sessionData[sessionIndex].stat[0];
 		const currentAverage = data.properties.sessionData[sessionIndex].stat[2];
-		const newAverage = ((currentAverage * totalSolves) + solve[0][1]) / (totalSolves + 1);
+		const newAverage = ((currentAverage * totalSolves) + countedTime) / (totalSolves + 1);
 
 		data.properties.sessionData[sessionIndex].stat[0] = totalSolves + 1;
 		data.properties.sessionData[sessionIndex].stat[2] = newAverage;
@@ -100,9 +102,11 @@ export const removeSolve = (scramble: string, time: number) => {
 			data.properties.sessionData[sessionIndex].date[1] = data['session' + sessionIndex][data['session' + sessionIndex].length - 1][3];
 		}
 
+		const countedTime = Math.floor(solve[0][1] / 10) * 10; // round to nearest 10ms
+
 		const totalSolves = data.properties.sessionData[sessionIndex].stat[0];
 		const currentAverage = data.properties.sessionData[sessionIndex].stat[2];
-		const newAverage = ((currentAverage * totalSolves) - solve[0][1]) / (totalSolves - 1);
+		const newAverage = ((currentAverage * totalSolves) - countedTime) / (totalSolves - 1);
 
 		data.properties.sessionData[sessionIndex].stat[0] = totalSolves - 1;
 		data.properties.sessionData[sessionIndex].stat[2] = newAverage;
