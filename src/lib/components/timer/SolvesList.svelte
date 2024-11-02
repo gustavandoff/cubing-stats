@@ -29,7 +29,7 @@
 			const diff = today.getDate() - day + (day === 0 ? -6 : 1);
 			const weekStart = new Date(today.setDate(diff));
 
-			today.setDate(new Date().getDate());
+			today.setDate(new Date().getTime());
 			
 			solvesList.forEach(solve => {
 				if (minTime && solve.timeInHundredths < Number(minTime)) {
