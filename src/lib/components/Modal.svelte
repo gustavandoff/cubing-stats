@@ -8,11 +8,19 @@ function closeModal() {
   dispatch('close');
 }
 
+function handleKeydown(event: KeyboardEvent) {
+  if (event.key === 'Escape') {
+    closeModal();
+  }
+}
+
 onMount(() => {
+  window.addEventListener('keydown', handleKeydown);
   $modalOpen = true;
 });
 
 onDestroy(() => {
+  window.removeEventListener('keydown', handleKeydown);
   $modalOpen = false;
 });
 </script>
