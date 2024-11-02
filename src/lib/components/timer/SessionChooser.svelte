@@ -5,10 +5,13 @@
     const target = e.target as HTMLSelectElement;
     currentSession.set(target.value);
   }
+
+  $: sessionNames = $formattedCSTimerData.sort((a, b) => a.sessionData.rank - b.sessionData.rank).map(session => session.sessionName);
 </script>
 
+
 <select value={String($currentSession)} on:change={handleSessionChange}>
-  {#each $formattedCSTimerData as session}
-    <option value={String(session.sessionName)}>{session.sessionName}</option>
+  {#each sessionNames as session}
+    <option value={String(session)}>{session}</option>
   {/each}
 </select>
