@@ -3,7 +3,6 @@
 
 	import { addSolve } from '$lib/solves';
 
-	import SessionChooser from '$lib/components/timer/SessionChooser.svelte';
 	import SolvesList from '$lib/components/timer/SolvesList.svelte';
 
 	import TimerWrapper from '$lib/components/timer/TimerWrapper.svelte';
@@ -89,10 +88,7 @@
 </script>
 
 <div class="wrapper">
-	<div>
-		Session
-		<SessionChooser />
-	</div>
+	<div></div>
 
 	<div class="container-center">
 		<div class="scramble-container">
