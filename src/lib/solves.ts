@@ -32,20 +32,20 @@ export const addSolve = (solve: SessionSolve) => {
 		const sessionIndex = get(csSessionData).indexOf(get(currentSession));
 		data['session' + sessionIndex].push(solve);
 
-		if (!data.properties.sessionData['session' + sessionIndex].hasOwnProperty('stat')) {
-			data.properties.sessionData['session' + sessionIndex].stat = [1, 0, solve[0][1]];
-			data.properties.sessionData['session' + sessionIndex].date = [solve[3], solve[3]];
+		if (!data.properties.sessionData[sessionIndex].hasOwnProperty('stat')) {
+			data.properties.sessionData[sessionIndex].stat = [1, 0, solve[0][1]];
+			data.properties.sessionData[sessionIndex].date = [solve[3], solve[3]];
 
 			return data;
 		}
 
-		const totalSolves = data.properties.sessionData['session' + sessionIndex].stat[0];
-		const currentAverage = data.properties.sessionData['session' + sessionIndex].stat[2];
+		const totalSolves = data.properties.sessionData[sessionIndex].stat[0];
+		const currentAverage = data.properties.sessionData[sessionIndex].stat[2];
 		const newAverage = ((currentAverage * totalSolves) + solve[0][1]) / totalSolves;
 
-		data.properties.sessionData['session' + sessionIndex].stat[0] = totalSolves + 1;
-		data.properties.sessionData['session' + sessionIndex].stat[2] = newAverage;
-		data.properties.sessionData['session' + sessionIndex].date[1] = solve[3];
+		data.properties.sessionData[sessionIndex].stat[0] = totalSolves + 1;
+		data.properties.sessionData[sessionIndex].stat[2] = newAverage;
+		data.properties.sessionData[sessionIndex].date[1] = solve[3];
 
 
 		return data;
@@ -62,23 +62,23 @@ export const removeSolve = (scramble: string, time: number) => {
 
 		if (!solve) return data;
 
-		if (data.properties.sessionData['session' + sessionIndex].stat[0] === 1) {
-			data.properties.sessionData['session' + sessionIndex].stat = [0, 0, -1];
-			data.properties.sessionData['session' + sessionIndex].date = [null, null];
+		if (data.properties.sessionData[sessionIndex].stat[0] === 1) {
+			data.properties.sessionData[sessionIndex].stat = [0, 0, -1];
+			data.properties.sessionData[sessionIndex].date = [null, null];
 			data['session' + sessionIndex] = [];
 			return data;
 		}
 
-		if (data.properties.sessionData['session' + sessionIndex].date[1] === solve[3]) {
-			data.properties.sessionData['session' + sessionIndex].date[1] = data['session' + sessionIndex][data['session' + sessionIndex].length - 1][3];
+		if (data.properties.sessionData[sessionIndex].date[1] === solve[3]) {
+			data.properties.sessionData[sessionIndex].date[1] = data['session' + sessionIndex][data['session' + sessionIndex].length - 1][3];
 		}
 
-		const totalSolves = data.properties.sessionData['session' + sessionIndex].stat[0];
-		const currentAverage = data.properties.sessionData['session' + sessionIndex].stat[2];
+		const totalSolves = data.properties.sessionData[sessionIndex].stat[0];
+		const currentAverage = data.properties.sessionData[sessionIndex].stat[2];
 		const newAverage = ((currentAverage * totalSolves) - solve[0][1]) / (totalSolves - 1);
 
-		data.properties.sessionData['session' + sessionIndex].stat[0] = totalSolves - 1;
-		data.properties.sessionData['session' + sessionIndex].stat[2] = newAverage;
+		data.properties.sessionData[sessionIndex].stat[0] = totalSolves - 1;
+		data.properties.sessionData[sessionIndex].stat[2] = newAverage;
 
 		data['session' + sessionIndex] = data['session' + sessionIndex].filter((s: SessionSolve) => 
 			!((s[0][1]).toString().substring(0, time.toString().length) === time.toString() && s[1] === scramble)
