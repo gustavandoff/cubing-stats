@@ -77,9 +77,9 @@
 <ul>
 	<h2>
 		Session
-		<span>
+		<div>
 			<SessionChooser />
-		</span>
+		</div>
 	</h2>
 	<div>
 		Solves / mean
@@ -102,6 +102,11 @@
 	h2 {
 		font-size: 1.1rem;
 		color: var(--greyed-color);
+
+		& > div {
+			display: flex;
+			margin-top: 0.5rem;
+		}
 	}
 
 	ul {
