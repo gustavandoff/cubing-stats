@@ -107,6 +107,7 @@ const defaultCSTimerData = {
 	}
 };
 
+export const modalOpen = writable<boolean>(false);
 
 export const currentSession = writable<string>();
 export const rawCSTimerData = writable<any>(null);

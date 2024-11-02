@@ -2,6 +2,7 @@
   import { onMount, onDestroy } from 'svelte';
   
   import { createEventDispatcher } from 'svelte';
+  import { modalOpen } from '$lib/solves';
   const dispatch = createEventDispatcher();
 
   export let timerStartKey: string = 'Space';
@@ -17,6 +18,7 @@
 
   // Handle the keydown event for the space bar
   function handleKeyDown(event: KeyboardEvent) {
+    if ($modalOpen) return;
     if (event.code === timerStopKey && timerInterval) {
       
       // Prevent default action (e.g., page scrolling)
@@ -49,6 +51,7 @@
 
   // Handle the keyup event for the space bar
   function handleKeyUp(event: KeyboardEvent) {
+    if ($modalOpen) return;
     if (event.code === timerStartKey) {
       event.preventDefault();
 

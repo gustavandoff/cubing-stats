@@ -1,11 +1,20 @@
 <script lang="ts">
-import { createEventDispatcher } from 'svelte';
+import { createEventDispatcher, onDestroy, onMount } from 'svelte';
+import { modalOpen } from '$lib/solves';
 
 const dispatch = createEventDispatcher();
 
 function closeModal() {
   dispatch('close');
 }
+
+onMount(() => {
+  $modalOpen = true;
+});
+
+onDestroy(() => {
+  $modalOpen = false;
+});
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
