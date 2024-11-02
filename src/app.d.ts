@@ -21,6 +21,13 @@ interface Solve {
 interface Session {
 	sessionName: string;
 	solves: Solve[];
+	sessionData: {
+		date: [number | null, number | null];
+		name: string | number;
+		opt: object;
+		rank: number;
+		stat: [number, number, number];
+	}
 }
 
 interface SessionSolve {
