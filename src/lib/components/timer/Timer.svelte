@@ -17,20 +17,24 @@
   let heldLongEnough = false;
 
   // Handle the keydown event for the space bar
-  function handleKeyDown(event: KeyboardEvent) {
+  function handleKeyDown(event: KeyboardEvent | true) {
     if ($modalOpen) return;
-    if (event.code === timerStopKey && timerInterval) {
+    if ((event === true || event.code === timerStopKey) && timerInterval) {
       
-      // Prevent default action (e.g., page scrolling)
-      event.preventDefault();
+      if (event !== true) {
+        // Prevent default action (e.g., page scrolling)
+        event.preventDefault();
+      }
 
       stopTimer();
       return;
     }
 
-    if (event.code === timerStartKey) {
-      // Prevent default action (e.g., page scrolling)
-      event.preventDefault();
+    if (event === true || event.code === timerStartKey) {
+      if (event !== true) {
+        // Prevent default action (e.g., page scrolling)
+        event.preventDefault();
+      }
 
       if (timerInterval) {
         return;
@@ -50,10 +54,14 @@
   }
 
   // Handle the keyup event for the space bar
-  function handleKeyUp(event: KeyboardEvent) {
+  function handleKeyUp(event: KeyboardEvent | true) {
     if ($modalOpen) return;
-    if (event.code === timerStartKey) {
-      event.preventDefault();
+    if (event === true || event.code === timerStartKey) {
+
+      if (event !== true) {
+        // Prevent default action (e.g., page scrolling)
+        event.preventDefault();
+      }
 
       if (holdTimer !== null) {
         clearTimeout(holdTimer);
@@ -126,7 +134,7 @@
 
 <!-- Display the formatted time -->
 <div>
-	<p class={'time ' + (holdTimer && (heldLongEnough ? 'timer-ready' : 'timer-waiting'))}>
+	<p on:touchstart={() => handleKeyDown(true)} on:touchend={() => handleKeyUp(true)} class={'time ' + (holdTimer && (heldLongEnough ? 'timer-ready' : 'timer-waiting'))}>
 		{formatedTime}
 	</p>
 </div>
