@@ -18,6 +18,7 @@
 		} else {
 			reader.onload = (e) => {
 				const data = JSON.parse(e.target?.result as string);
+				data.properties.sessionData = JSON.parse(data.properties.sessionData);
 				setRawCSTimerData(data);
 			};
 			reader.readAsText(file);
