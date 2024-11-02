@@ -8,6 +8,15 @@ export const rawCSTimerData = writable<any>(null);
 const csSessionData = writable<csSessionData[]>([]);
 
 export const setRawCSTimerData = (data: any) => {
+	Object.values(data.properties.sessionData).forEach((session: any) => {
+		if (!session.hasOwnProperty('stat')) {
+			session.stat = [0, 0, -1];
+		}
+		if (!session.hasOwnProperty('date')) {
+			session.date = [null, null];
+		}
+	});
+
 	rawCSTimerData.set(data);
 
 	const tempSessionData = [null, ...Object.values(data.properties.sessionData).map((session: any) => session.name)];
