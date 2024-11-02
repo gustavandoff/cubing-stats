@@ -19,7 +19,7 @@ export const setRawCSTimerData = (data: any) => {
 	localStorage.setItem('currentSession', tempSessionData[1]);
 };
 
-export const setDataFromLocalStorage = () => {
+export const setStartingData = () => {
 	if (!localStorage.getItem('rawCSTimerData')) {
 		setRawCSTimerData(DefaultCSTimerData);
 		return;

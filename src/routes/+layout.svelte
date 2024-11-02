@@ -8,10 +8,10 @@
 	import LoginForm from '$lib/components/login/LoginForm.svelte';
 	import SignupForm from '$lib/components/login/SignupForm.svelte';
 
-	import { rawCSTimerData, setDataFromLocalStorage } from '$lib/solves';
+	import { rawCSTimerData, setStartingData } from '$lib/solves';
 
 	$: if (browser && !$rawCSTimerData) {
-		setDataFromLocalStorage();
+		setStartingData();
 	}
 
 	$: showLoadTimes = showUpload || (browser && !localStorage.getItem('rawCSTimerData') && !$rawCSTimerData);
