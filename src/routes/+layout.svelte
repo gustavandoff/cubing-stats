@@ -14,10 +14,11 @@
 		setDataFromLocalStorage();
 	}
 
-	$: showLoadTimes = browser && !localStorage.getItem('rawCSTimerData') && !$rawCSTimerData;
+	$: showLoadTimes = showUpload || (browser && !localStorage.getItem('rawCSTimerData') && !$rawCSTimerData);
 
 	let showLogin = false;
 	let showSignup = false;
+	let showUpload = false;
 
 	function setShowLogin(show: boolean) {
 		showLogin = show;
@@ -26,12 +27,16 @@
 	function setShowSignup(show: boolean) {
 		showSignup = show;
 	}
+
+	function setShowUpload(show: boolean) {
+		showUpload = show;
+	}
 </script>
 
 {#if showLoadTimes}
-	<LoadTimes />
+	<LoadTimes on:close={() => setShowUpload(false)} />
 {/if}
-<LoginSignupButtons on:login={() => setShowLogin(true)} on:signup={() => setShowSignup(true)} />
+<LoginSignupButtons on:login={() => setShowLogin(true)} on:signup={() => setShowSignup(true)} on:upload={() => setShowUpload(true)} />
 	
 
 {#if showLogin}
