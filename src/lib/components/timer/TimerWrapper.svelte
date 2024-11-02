@@ -2,11 +2,29 @@
 	import { createEventDispatcher } from 'svelte';
 	const dispatch = createEventDispatcher();
 
+	import { modalOpen } from '$lib/solves';
+
 	import Timer from './Timer.svelte';
 	import TypeTimer from './TypeTimer.svelte';
 
 	export let type: 'timer' | 'type-timer' = 'timer';
 	export let battlers = 1;
+
+	import { onMount } from 'svelte';
+
+	function handleKeydown(event: KeyboardEvent) {
+		if ($modalOpen) return;
+		if (event.key === 'Enter') {
+			dispatch('save-time', 0);
+		}
+	}
+
+	onMount(() => {
+		window.addEventListener('keydown', handleKeydown);
+		return () => {
+			window.removeEventListener('keydown', handleKeydown);
+		};
+	});
 </script>
 
 {#if type === 'timer'}
