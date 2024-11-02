@@ -76,7 +76,7 @@ export const addSolve = (solve: SessionSolve) => {
 		data.properties.sessionData[sessionIndex].stat[2] = newAverage;
 		data.properties.sessionData[sessionIndex].date[1] = solve[3];
 
-
+		localStorage.setItem('rawCSTimerData', JSON.stringify(data));
 		return data;
 	});
 }
@@ -114,6 +114,8 @@ export const removeSolve = (scramble: string, time: number) => {
 		data['session' + sessionIndex] = data['session' + sessionIndex].filter((s: SessionSolve) => 
 			!((s[0][1]).toString().substring(0, time.toString().length) === time.toString() && s[1] === scramble)
 		);
+
+		localStorage.setItem('rawCSTimerData', JSON.stringify(data));
 		return data;
 	});
 }
