@@ -61,7 +61,7 @@ onDestroy(() => {
   }
 
   .modal-background {
-		background-color: rgba(100, 100, 100, 0.3);
+		background-color: rgba(50, 50, 50, 0.3);
 		position: absolute;
 		top: 0;
 		left: 0;

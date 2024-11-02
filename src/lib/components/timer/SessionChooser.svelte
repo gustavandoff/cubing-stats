@@ -22,7 +22,7 @@
     padding: 0.25rem 0.5rem;
     border: 1px solid var(--greyed-color);
     border-radius: var(--border-radius);
-    background-color: #121212;
+    background-color: var(--input-background-color);
     color: #fff;
     font-size: 1.5rem;
     cursor: pointer;

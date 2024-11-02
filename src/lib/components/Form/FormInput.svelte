@@ -22,7 +22,7 @@
 		margin-bottom: 1rem;
 		border: 1px solid #ccc;
 		border-radius: var(--border-radius);
-    background-color: #121212;
+    background-color: var(--input-background-color);
     color: #fff;
 	}
 

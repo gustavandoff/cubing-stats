@@ -57,7 +57,7 @@ const dispatch = createEventDispatcher();
 
 <style>
 	.card {
-		background-color: #121212;
+		background-color: var(--background-color);
 		padding: 1.5rem 2rem;
 		border-radius: var(--border-radius);
 	}

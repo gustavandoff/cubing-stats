@@ -7,7 +7,7 @@
 
 <style>
 	.login-form {
-		background-color: #121212;
+		background-color: var(--background-color);
 		padding: 2rem;
 		border-radius: var(--border-radius);
 		width: 300px;
