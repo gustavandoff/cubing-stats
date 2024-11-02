@@ -1,17 +1,14 @@
 <script lang="ts">
   import { formattedCSTimerData, currentSession } from '$lib/solves';
 
-  let session = $currentSession;
-
   function handleSessionChange(e: Event) {
     const target = e.target as HTMLSelectElement;
-    session = target.value;
-    currentSession.set(session);
+    currentSession.set(target.value);
   }
 </script>
 
-<select bind:value={session} on:change={handleSessionChange}>
+<select value={String($currentSession)} on:change={handleSessionChange}>
   {#each $formattedCSTimerData as session}
-    <option value={session.sessionName}>{session.sessionName}</option>
+    <option value={String(session.sessionName)}>{session.sessionName}</option>
   {/each}
 </select>

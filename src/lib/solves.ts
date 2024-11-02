@@ -127,7 +127,7 @@ export const setRawCSTimerData = (data: any) => {
 	const tempSessionData = [null, ...Object.values(data.properties.sessionData).map((session: any) => session.name)];
 	csSessionData.set(tempSessionData);
 	currentSession.set(tempSessionData[1]);
-	
+
 	localStorage.setItem('rawCSTimerData', JSON.stringify(data));
 	localStorage.setItem('csSessionData', JSON.stringify(tempSessionData));
 	localStorage.setItem('currentSession', tempSessionData[1]);
@@ -248,7 +248,7 @@ export const formattedCSTimerData: Readable<Session[]> = derived(
 			});
 
 			formattedData.push({
-				sessionName: '' + sessionName,
+				sessionName: sessionName,
 				solves: formattedSession,
 				sessionData: $rawCSTimerData.properties.sessionData[i]
 			});
@@ -261,8 +261,7 @@ export const currentSessionData: Readable<Session> = derived(
 	[formattedCSTimerData, currentSession],
 	([$formattedCSTimerData, $currentSession], set) => {
 		const emptySession: Session = { sessionName: '', solves: [], sessionData: { date: [null, null], name: '', opt: {}, rank: 0, stat: [0, 0, -1] } };
-		const session = $formattedCSTimerData.find(s => s.sessionName === $currentSession) || emptySession;
+		const session = $formattedCSTimerData.find(s => s.sessionName == $currentSession) || emptySession;
 		set(session);
-		localStorage.setItem('currentSession', session.sessionName);
 	}
 );
