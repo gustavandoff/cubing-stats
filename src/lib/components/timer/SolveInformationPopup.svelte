@@ -86,7 +86,6 @@
 
 	.scramble {
 		font-size: 1.25rem;
-    white-space: nowrap;
 	}
 
 	.date {
