@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { currentSessionData } from '$lib/solves';
+	import { convertHundredths } from '$lib/utils';
 
 	import SolveListTimePeriod from './SolveListTimePeriod.svelte';
 	import SessionChooser from './SessionChooser.svelte';
@@ -71,7 +72,7 @@
 		}
 	}
 
-	$: mean = Math.round($currentSessionData?.sessionData.stat[2] / 10) / 100;
+	$: mean = convertHundredths(Math.round($currentSessionData?.sessionData.stat[2] / 10));
 </script>
 
 <ul>
