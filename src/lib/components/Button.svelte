@@ -17,7 +17,7 @@ function handleCLick() {
 
 <style>
   button {
-    background-color: #333333;
+    background-color: #222;
     color: white;
     border: none;
 		border-radius: var(--border-radius);
@@ -26,11 +26,11 @@ function handleCLick() {
     cursor: pointer;
 
     &:hover {
-      background-color: #444444;
+      background-color: #333;
     }
 
     &:active {
-      background-color: #222222;
+      background-color: #444;
     }
   }
 
@@ -38,11 +38,11 @@ function handleCLick() {
 		background-color: #ff0000;
 
 		&:hover {
-			background-color: #cc0000;
+			background-color: #990000;
 		}
 
 		&:active {
-			background-color: #aa0000;
+			background-color: #660000;
 		}
 	}
 </style>
