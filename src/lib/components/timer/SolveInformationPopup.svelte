@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
-	import { draw3x3Scramble } from '$lib/scrambler';
+	import { draw3x3Scramble } from '$lib/puzzleSimulators/scrambler';
   import { removeSolve } from '$lib/solves';
 
 	import Button from '../Button.svelte';

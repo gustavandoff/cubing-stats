@@ -8,7 +8,7 @@
 	import TimerWrapper from '$lib/components/timer/TimerWrapper.svelte';
 	import ToggleSwitch from '$lib/components/ToggleSwitch.svelte';
 
-	import { draw2x2Scramble, draw3x3Scramble, get2x2Scramble, get3x3Scramble } from '$lib/scrambler';
+	import { draw2x2Scramble, draw3x3Scramble, get2x2Scramble, get3x3Scramble } from '$lib/puzzleSimulators/scrambler';
 
 	let battleMode = false;
 	let battlersFinished = 0;
