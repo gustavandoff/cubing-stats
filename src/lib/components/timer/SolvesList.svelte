@@ -17,7 +17,7 @@
 
 	$: {
 		if ($currentSessionData?.solves) {
-			const solvesList = $currentSessionData.solves.reverse();
+			const solvesList = $currentSessionData.solves.toReversed();
 
 			todaySolves = [];
 			yesterDaySolves = [];
