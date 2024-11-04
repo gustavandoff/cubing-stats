@@ -145,6 +145,9 @@
 		font-weight: 700;
 		text-align: center;
 		margin: 0;
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
 	}
 
 	.timer-waiting {
